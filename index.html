@@ -70,7 +70,8 @@ input, textarea { font-family: inherit; }
 .sidebar-divider { height: 1px; background: rgba(255,255,255,.06); margin: 8px 18px; }
 
 .sidebar-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-500); padding: 12px 18px 8px; }
-.case-list { padding: 0 10px; flex: 1; overflow-y: auto; }
+.case-list { padding: 0 10px; flex: 1; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.case-list::-webkit-scrollbar { display: none; }
 .case-item { padding: 10px 12px; border-radius: var(--radius); cursor: default; }
 .case-item:hover { background: rgba(255,255,255,.03); }
 .case-item .case-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.8); }
