@@ -504,7 +504,7 @@ input, textarea { font-family: inherit; }
         <div class="panel-body">
           <div class="panel-body-main">
             <div class="tl-cards">
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi087">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi087" data-category="rfi delay">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Jan 14, 2024</div>
@@ -525,7 +525,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="pile">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="pile" data-category="delay">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Feb 3, 2024</div>
@@ -546,7 +546,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="email-webb">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="email-webb" data-category="hotdoc">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Feb 22, 2024</div>
@@ -568,7 +568,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi112">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi112" data-category="rfi delay">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Mar 8, 2024</div>
@@ -589,7 +589,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="idle">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="idle" data-category="hotdoc">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Mar 19, 2024</div>
@@ -610,7 +610,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="accel">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="accel" data-category="delay">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Apr 5, 2024</div>
@@ -631,7 +631,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="summit">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="summit" data-category="hotdoc">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">May 15, 2024</div>
@@ -653,7 +653,7 @@ input, textarea { font-family: inherit; }
                 </div>
               </div>
 
-              <div class="tl-card" onclick="toggleTl(this)" data-evidence="extension">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="extension" data-category="delay">
                 <div class="tl-card-top">
                   <div class="tl-card-left">
                     <div class="tl-date">Jun 2, 2024</div>
@@ -1154,6 +1154,15 @@ function toggleTl(el) {
 function setFilter(el) {
   el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
+  const filter = el.textContent.trim().toLowerCase();
+  document.querySelectorAll('.tl-card').forEach(card => {
+    const cat = (card.getAttribute('data-category') || '').toLowerCase();
+    if (filter === 'all facts') { card.style.display = ''; }
+    else if (filter === 'delays') { card.style.display = cat.includes('delay') ? '' : 'none'; }
+    else if (filter === 'rfis') { card.style.display = cat.includes('rfi') ? '' : 'none'; }
+    else if (filter === 'hot docs') { card.style.display = cat.includes('hotdoc') ? '' : 'none'; }
+    else { card.style.display = ''; }
+  });
 }
 
 /* ── Tabs ── */
