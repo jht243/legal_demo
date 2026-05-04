@@ -8,309 +8,354 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --navy: #1a1f36;
-  --navy-light: #252b48;
-  --navy-hover: #2d3561;
+  --navy: #111827;
+  --navy-light: #1f2937;
+  --navy-hover: #374151;
+  --indigo: #6366f1;
+  --indigo-light: #e0e7ff;
+  --indigo-dark: #4338ca;
   --blue: #3b82f6;
   --blue-light: #dbeafe;
-  --blue-dark: #1e40af;
   --red: #ef4444;
   --red-light: #fef2f2;
   --yellow: #f59e0b;
   --yellow-light: #fffbeb;
   --green: #10b981;
   --green-light: #d1fae5;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
-  --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -1px rgba(0,0,0,.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -2px rgba(0,0,0,.04);
   --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
   --radius: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  --transition: 200ms ease;
+  --transition: 180ms ease;
 }
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; overflow: hidden; height: 100vh; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input, textarea { font-family: inherit; }
 
 /* ── Layout ── */
-.app { display: flex; height: 100vh; position: relative; z-index: 1; }
-.sidebar { width: 260px; background: var(--navy); color: #fff; display: flex; flex-direction: column; flex-shrink: 0; }
-.sidebar-brand { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
-.sidebar-brand h1 { font-size: 15px; font-weight: 700; letter-spacing: -.2px; color: #fff; }
-.sidebar-brand p { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
-.sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
-.nav-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); margin-bottom: 2px; }
+.app { display: flex; height: 100vh; }
+.sidebar { width: 240px; background: var(--navy); color: #fff; display: flex; flex-direction: column; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,.06); }
+.sidebar-brand { padding: 20px 18px 14px; }
+.sidebar-brand h1 { font-size: 15px; font-weight: 700; letter-spacing: -.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
+.sidebar-brand .version { font-size: 10px; font-weight: 600; color: var(--gray-400); background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 4px; letter-spacing: .3px; }
+.sidebar-status { display: flex; align-items: center; gap: 6px; padding: 0 18px 16px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--green); }
+.sidebar-status .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+.sidebar-nav { padding: 0 10px; margin-bottom: 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); margin-bottom: 2px; position: relative; }
 .nav-item:hover { background: var(--navy-hover); }
-.nav-item.active { background: var(--blue); }
-.nav-icon { font-size: 20px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
-.nav-label strong { display: block; font-size: 13px; font-weight: 600; }
-.nav-label em { font-size: 11px; font-style: italic; color: rgba(255,255,255,.55); }
-.nav-item.active .nav-label em { color: rgba(255,255,255,.8); }
-.sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.08); }
-.sidebar-user { display: flex; align-items: center; gap: 10px; }
-.sidebar-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; }
-.sidebar-user-info strong { display: block; font-size: 13px; font-weight: 600; }
-.sidebar-user-info span { font-size: 11px; color: rgba(255,255,255,.45); }
+.nav-item.active { background: rgba(99,102,241,.15); }
+.nav-item.active::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--indigo); border-radius: 0 3px 3px 0; }
+.nav-icon { font-size: 16px; line-height: 1; flex-shrink: 0; }
+.nav-label { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.85); }
+.nav-item.active .nav-label { color: #fff; font-weight: 600; }
+.nav-cta { display: block; font-size: 9px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; animation: ctaPulse 2s ease-in-out infinite; }
+@keyframes ctaPulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+.nav-item.visited .nav-cta { display: none; }
+
+.sidebar-divider { height: 1px; background: rgba(255,255,255,.06); margin: 8px 18px; }
+
+.sidebar-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-500); padding: 12px 18px 8px; }
+.case-list { padding: 0 10px; flex: 1; overflow-y: auto; }
+.case-item { padding: 10px 12px; border-radius: var(--radius); cursor: default; }
+.case-item:hover { background: rgba(255,255,255,.03); }
+.case-item .case-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.8); }
+.case-item .case-meta { font-size: 10px; color: var(--gray-500); margin-top: 1px; }
+.case-item.active-case .case-name { color: var(--indigo-light); }
+
+.sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,.06); }
+.sidebar-doc-count { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--gray-400); }
+.sidebar-doc-count .count-icon { font-size: 14px; color: var(--indigo); }
+.sidebar-user { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.sidebar-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+.sidebar-user-info { font-size: 11px; font-weight: 500; color: rgba(255,255,255,.6); }
+.sidebar-user-info strong { display: block; color: #fff; font-weight: 600; font-size: 12px; }
 
 /* ── Main Content ── */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.topbar { height: 56px; background: #fff; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
-.topbar-left { display: flex; align-items: center; gap: 16px; }
-.topbar-left .firm-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-.topbar-divider { width: 1px; height: 24px; background: var(--gray-200); }
-.topbar-matter { font-size: 13px; color: var(--gray-600); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; }
-.topbar-matter strong { color: var(--gray-800); font-weight: 600; }
-.topbar-right { display: flex; align-items: center; gap: 12px; }
-.topbar-date { font-size: 12px; color: var(--gray-500); }
-.deadline-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--red-light); color: var(--red); font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
-.deadline-pill .dot { width: 7px; height: 7px; background: var(--red); border-radius: 50%; animation: pulse 2s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
-
+.topbar { height: 48px; background: #fff; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.topbar-matter { font-size: 12px; color: var(--gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; }
+.topbar-matter strong { color: var(--gray-700); font-weight: 600; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-date { font-size: 11px; color: var(--gray-400); }
+.topbar-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+.badge-secure { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+.badge-deadline { background: var(--red-light); color: var(--red); }
+.badge-deadline .dot { width: 5px; height: 5px; background: var(--red); border-radius: 50%; animation: pulse 2s infinite; }
 
 /* ── Content Area ── */
-.content { flex: 1; overflow-y: auto; padding: 24px 32px; }
-.panel { display: none; animation: fadeIn .25s ease; }
-.panel.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.panel-header { margin-bottom: 20px; }
-.panel-title { font-size: 22px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
+.content { flex: 1; overflow-y: auto; background: var(--gray-50); }
+.panel { display: none; animation: fadeIn .25s ease; height: 100%; }
+.panel.active { display: flex; flex-direction: column; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* ── Context Banner ── */
-.context-banner { background: var(--blue-light); border: 1px solid #93c5fd; border-radius: var(--radius); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.context-banner p { font-size: 13px; color: var(--blue-dark); }
-.context-banner .dismiss { background: none; border: none; color: var(--blue-dark); font-size: 18px; cursor: pointer; padding: 0 4px; opacity: .6; transition: opacity var(--transition); }
-.context-banner .dismiss:hover { opacity: 1; }
-.context-banner.hidden { display: none; }
+/* ── Panel Header Bar ── */
+.panel-header-bar { background: #fff; border-bottom: 1px solid var(--gray-200); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.panel-header-left { display: flex; align-items: center; gap: 12px; }
+.panel-header-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--indigo-light); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.panel-header-text h2 { font-size: 17px; font-weight: 700; color: var(--gray-800); }
+.panel-header-text .panel-ref { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+.panel-header-right { display: flex; align-items: center; gap: 8px; }
 
-/* ── Stats Bar ── */
-.stats-bar { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-.stat-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px 20px; flex: 1; min-width: 160px; box-shadow: var(--shadow-sm); }
-.stat-card .stat-value { font-size: 24px; font-weight: 800; color: var(--navy); }
-.stat-card .stat-label { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
-.stat-card.highlight { border-color: var(--blue); background: linear-gradient(135deg, #eff6ff, #dbeafe); }
-.stat-card.highlight .stat-value { color: var(--blue); }
+/* ── Panel Hero (Problem Statement) ── */
+.panel-hero { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: var(--radius-lg); padding: 24px 28px; margin: 20px 24px 0; color: #fff; animation: heroAttention .5s ease-out; flex-shrink: 0; }
+.panel-hero.attention { animation: heroAttention .5s ease-out; }
+@keyframes heroAttention { 0% { transform: scale(.98); opacity: 0; } 50% { transform: scale(1.005); } 100% { transform: scale(1); opacity: 1; } }
+.panel-hero .hero-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #a5b4fc; margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.panel-hero .hero-eyebrow::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #a5b4fc; border-radius: 50%; animation: eyebrowPulse 2s ease-in-out infinite; }
+@keyframes eyebrowPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(165,180,252,.5); } 50% { opacity: .7; box-shadow: 0 0 0 5px rgba(165,180,252,0); } }
+.panel-hero h3 { font-size: 18px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.panel-hero p { font-size: 13px; color: #c7d2fe; line-height: 1.6; }
 
-/* ── Chat FAB + Dialog ── */
-.chat-fab { position: fixed; bottom: 24px; right: 28px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: var(--shadow-lg), 0 0 0 0 rgba(59,130,246,.4); cursor: pointer; transition: all var(--transition); animation: fabPing 3s ease-in-out infinite; border: none; }
-.chat-fab:hover { background: var(--blue-dark); transform: scale(1.08); }
-.chat-fab.open { animation: none; }
-@keyframes fabPing { 0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(59,130,246,.35); } 50% { box-shadow: var(--shadow-lg), 0 0 0 10px rgba(59,130,246,0); } }
+/* ── Filter Pills ── */
+.filter-bar { display: flex; align-items: center; gap: 6px; padding: 16px 24px 0; flex-shrink: 0; }
+.filter-pill { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all var(--transition); border: 1px solid var(--gray-200); color: var(--gray-500); background: #fff; }
+.filter-pill:hover { border-color: var(--indigo); color: var(--indigo); }
+.filter-pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 
-.chat-dialog { position: fixed; bottom: 92px; right: 28px; z-index: 91; width: 400px; max-height: 520px; background: #fff; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; animation: chatSlideUp .25s ease; }
-.chat-dialog.open { display: flex; }
-@keyframes chatSlideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+/* ── Panel Body ── */
+.panel-body { flex: 1; overflow-y: auto; padding: 16px 24px 24px; display: flex; gap: 20px; }
+.panel-body-main { flex: 1; min-width: 0; }
+.panel-body-side { width: 320px; flex-shrink: 0; }
 
-.chat-header { background: var(--navy); color: #fff; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-.chat-header-left { display: flex; align-items: center; gap: 10px; }
-.chat-header-left .chat-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.chat-header-left div strong { display: block; font-size: 14px; font-weight: 600; }
-.chat-header-left div span { font-size: 11px; color: rgba(255,255,255,.5); }
-.chat-close { color: rgba(255,255,255,.5); font-size: 20px; cursor: pointer; background: none; border: none; transition: color var(--transition); padding: 0; }
-.chat-close:hover { color: #fff; }
+/* ── Timeline v2 ── */
+.tl-cards { display: flex; flex-direction: column; gap: 10px; }
+.tl-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px 18px; cursor: pointer; transition: all var(--transition); }
+.tl-card:hover { border-color: var(--indigo); box-shadow: var(--shadow-md); }
+.tl-card.expanded { border-color: var(--indigo); }
+.tl-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.tl-card-left { flex: 1; min-width: 0; }
+.tl-date { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+.tl-title { font-size: 14px; font-weight: 600; color: var(--gray-800); line-height: 1.4; }
+.tl-card-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.tl-day-badge { background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 6px; padding: 4px 8px; text-align: center; min-width: 44px; }
+.tl-day-badge .day-num { font-size: 14px; font-weight: 800; color: var(--gray-800); }
+.tl-day-badge .day-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--gray-400); }
+.tl-day-badge.critical { background: var(--red-light); border-color: #fca5a5; }
+.tl-day-badge.critical .day-num { color: var(--red); }
+.tl-day-badge.warning { background: var(--yellow-light); border-color: #fde68a; }
+.tl-day-badge.warning .day-num { color: var(--yellow); }
 
-.chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 280px; background: var(--gray-50); }
-.chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
-.chat-msg.ai { background: #fff; border: 1px solid var(--gray-200); color: var(--gray-700); align-self: flex-start; border-bottom-left-radius: 4px; }
-.chat-msg.user { background: var(--blue); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-msg .msg-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; opacity: .6; }
+.tl-meta { display: flex; align-items: center; gap: 12px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--gray-100); }
+.tl-grounding { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--green); }
+.tl-grounding .g-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+.tl-exhibit { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--indigo); }
+.tl-type-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; }
+.tl-type-critical { background: var(--red-light); color: var(--red); }
+.tl-type-hotdoc { background: var(--yellow-light); color: #92400e; }
+.tl-type-rfi { background: var(--blue-light); color: var(--blue); }
+.tl-type-notice { background: var(--green-light); color: #065f46; }
 
-.chat-input-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--gray-200); background: #fff; }
-.chat-input-bar input { flex: 1; border: 1px solid var(--gray-200); border-radius: 20px; padding: 10px 16px; font-size: 13px; background: var(--gray-50); }
-.chat-input-bar input:focus { outline: none; border-color: var(--blue); }
-.chat-send { width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; border: none; cursor: pointer; transition: background var(--transition); flex-shrink: 0; }
-.chat-send:hover { background: var(--blue-dark); }
+.tl-detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-600); line-height: 1.7; display: none; }
+.tl-card.expanded .tl-detail { display: block; animation: fadeIn .2s ease; }
+.tl-quote { font-style: italic; color: var(--gray-700); background: var(--gray-50); padding: 10px 14px; border-left: 3px solid var(--indigo); border-radius: 0 var(--radius) var(--radius) 0; margin: 8px 0; }
+.tl-source { font-size: 11px; color: var(--indigo); font-weight: 600; margin-top: 8px; }
+
+/* ── Evidence Trace Panel ── */
+.evidence-panel { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; position: sticky; top: 0; }
+.evidence-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
+.evidence-header h4 { font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--gray-700); display: flex; align-items: center; gap: 6px; }
+.evidence-doc { padding: 20px; }
+.evidence-doc-page { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px 20px; font-size: 12px; line-height: 1.8; color: var(--gray-600); }
+.evidence-doc-page .doc-header { text-align: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 2px solid var(--gray-300); }
+.evidence-doc-page .doc-title { font-size: 16px; font-weight: 800; color: var(--gray-800); text-transform: uppercase; letter-spacing: 1px; }
+.evidence-doc-page .doc-meta { margin-top: 8px; }
+.evidence-doc-page .doc-meta-row { display: flex; gap: 8px; }
+.evidence-doc-page .doc-meta-label { font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: .5px; min-width: 60px; }
+.evidence-doc-page .doc-meta-value { color: var(--gray-700); font-weight: 600; }
+.evidence-highlight { background: #fef08a; padding: 1px 3px; border-radius: 2px; color: var(--gray-800); font-weight: 500; }
+.evidence-footer { padding: 12px 16px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; gap: 6px; }
+.evidence-footer span { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--gray-500); }
+
+/* ── Stats Bar (compact) ── */
+.stats-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-chip { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 10px 14px; flex: 1; min-width: 120px; }
+.stat-chip .stat-val { font-size: 20px; font-weight: 800; color: var(--navy); }
+.stat-chip .stat-lbl { font-size: 10px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+.stat-chip.accent { border-color: var(--indigo); background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
+.stat-chip.accent .stat-val { color: var(--indigo); }
+
+/* ── Result Cards v2 ── */
+.result-cards { display: flex; flex-direction: column; gap: 10px; }
+.result-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px 18px; transition: all var(--transition); }
+.result-card:hover { border-color: var(--indigo); box-shadow: var(--shadow-md); }
+.result-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.result-card-title { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.result-card-meta { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+.result-tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: var(--gray-100); color: var(--gray-600); text-transform: uppercase; letter-spacing: .3px; }
+.result-year { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+.result-summary { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+.result-summary mark { background: #fef08a; padding: 1px 3px; border-radius: 2px; }
 
 /* ── Buttons ── */
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; transition: all var(--transition); }
-.btn-primary { background: var(--blue); color: #fff; }
-.btn-primary:hover { background: var(--blue-dark); }
-.btn-outline { border: 1px solid var(--gray-300); color: var(--gray-700); background: #fff; }
-.btn-outline:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius); font-size: 12px; font-weight: 600; transition: all var(--transition); }
+.btn-primary { background: var(--indigo); color: #fff; }
+.btn-primary:hover { background: var(--indigo-dark); }
+.btn-outline { border: 1px solid var(--gray-200); color: var(--gray-600); background: #fff; }
+.btn-outline:hover { border-color: var(--indigo); color: var(--indigo); }
 .btn-danger { background: var(--red); color: #fff; }
 .btn-danger:hover { background: #dc2626; }
 .btn-success { background: var(--green); color: #fff; }
 .btn-success:hover { background: #059669; }
-.btn-sm { padding: 5px 10px; font-size: 12px; }
-
-/* ── Timeline ── */
-.timeline { position: relative; padding-left: 32px; }
-.timeline::before { content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background: var(--gray-200); }
-.timeline-event { position: relative; margin-bottom: 8px; }
-.timeline-dot { position: absolute; left: -32px; top: 16px; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow-sm); z-index: 1; }
-.timeline-dot.red { background: var(--red); }
-.timeline-dot.yellow { background: var(--yellow); }
-.timeline-dot.blue { background: var(--blue); }
-.timeline-dot.green { background: var(--green); }
-.timeline-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px 18px; cursor: pointer; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-.timeline-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue); }
-.timeline-card.expanded { border-color: var(--blue); background: #fafbff; }
-.timeline-card-header { display: flex; align-items: center; justify-content: space-between; }
-.timeline-date { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; }
-.timeline-title { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-top: 4px; }
-.timeline-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
-.badge-red { background: var(--red-light); color: var(--red); }
-.badge-yellow { background: var(--yellow-light); color: #b45309; }
-.badge-blue { background: var(--blue-light); color: var(--blue); }
-.timeline-detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-600); line-height: 1.6; display: none; }
-.timeline-card.expanded .timeline-detail { display: block; animation: fadeIn .2s ease; }
-.timeline-source { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--blue); font-weight: 600; margin-top: 8px; }
-
-/* ── Result Cards ── */
-.result-cards { display: flex; flex-direction: column; gap: 12px; }
-.result-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-sm); transition: all var(--transition); }
-.result-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue); }
-.result-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
-.result-card-title { font-size: 15px; font-weight: 600; color: var(--gray-800); }
-.result-card-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-.result-tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: var(--gray-100); color: var(--gray-600); }
-.result-year { font-size: 12px; color: var(--gray-400); font-weight: 500; }
-.result-summary { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
-.result-summary mark { background: #fef08a; padding: 1px 2px; border-radius: 2px; }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+.btn-added { background: var(--green-light) !important; color: #065f46 !important; border-color: #a7f3d0 !important; pointer-events: none; }
 
 /* ── Badge Bar ── */
-.badge-bar { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); color: #065f46; font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 20px; margin-bottom: 20px; }
-.badge-bar .icon { font-size: 16px; }
+.badge-bar { display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); color: var(--gray-600); font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; border: 1px solid var(--gray-200); }
 
 /* ── Alert ── */
-.alert-urgent { background: var(--red-light); border: 1px solid #fca5a5; border-radius: var(--radius); padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-.alert-urgent .alert-icon { font-size: 24px; }
+.alert-urgent { background: var(--red-light); border: 1px solid #fca5a5; border-radius: var(--radius-lg); padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.alert-urgent .alert-icon { font-size: 20px; }
 .alert-urgent .alert-text { flex: 1; }
-.alert-urgent .alert-title { font-size: 14px; font-weight: 700; color: var(--red); }
-.alert-urgent .alert-sub { font-size: 13px; color: #991b1b; }
+.alert-urgent .alert-title { font-size: 13px; font-weight: 700; color: var(--red); }
+.alert-urgent .alert-sub { font-size: 12px; color: #991b1b; }
 
 /* ── Tabs ── */
-.tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid var(--gray-200); }
-.tab { padding: 10px 20px; font-size: 13px; font-weight: 600; color: var(--gray-500); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all var(--transition); cursor: pointer; }
-.tab:hover { color: var(--gray-700); }
-.tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tabs { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid var(--gray-200); }
+.tab { padding: 8px 16px; font-size: 12px; font-weight: 600; color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all var(--transition); cursor: pointer; text-transform: uppercase; letter-spacing: .3px; }
+.tab:hover { color: var(--gray-600); }
+.tab.active { color: var(--indigo); border-bottom-color: var(--indigo); }
 .tab-content { display: none; animation: fadeIn .2s ease; }
 .tab-content.active { display: block; }
 
 /* ── Form ── */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; }
 .form-group { display: flex; flex-direction: column; }
 .form-group.full { grid-column: 1 / -1; }
-.form-group label { font-size: 12px; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .3px; }
-.form-group input, .form-group textarea, .form-group select { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 10px 14px; font-size: 14px; color: var(--gray-700); background: var(--gray-50); }
-.form-group textarea { resize: vertical; min-height: 80px; }
-.form-actions { grid-column: 1 / -1; display: flex; gap: 8px; margin-top: 8px; }
+.form-group label { font-size: 10px; font-weight: 700; color: var(--gray-400); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .5px; }
+.form-group input, .form-group textarea, .form-group select { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 9px 12px; font-size: 13px; color: var(--gray-700); background: var(--gray-50); }
+.form-group textarea { resize: vertical; min-height: 70px; }
+.form-actions { grid-column: 1 / -1; display: flex; gap: 8px; margin-top: 6px; }
 
-/* ── Calendar Mini ── */
-.calendar-mini { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); margin-top: 20px; max-width: 320px; }
-.calendar-mini .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.calendar-mini .cal-header h4 { font-size: 14px; font-weight: 600; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-.cal-grid .day-label { font-size: 10px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; padding: 4px; }
-.cal-grid .day { font-size: 12px; padding: 6px; border-radius: 6px; cursor: default; }
+/* ── Calendar ── */
+.calendar-mini { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 14px; margin-top: 16px; max-width: 300px; }
+.calendar-mini .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.calendar-mini .cal-header h4 { font-size: 13px; font-weight: 600; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.cal-grid .day-label { font-size: 9px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; padding: 3px; }
+.cal-grid .day { font-size: 11px; padding: 5px; border-radius: 6px; cursor: default; }
 .cal-grid .day.empty { visibility: hidden; }
-.cal-grid .day.today { background: var(--blue-light); color: var(--blue); font-weight: 700; }
+.cal-grid .day.today { background: var(--indigo-light); color: var(--indigo); font-weight: 700; }
 .cal-grid .day.deadline { background: var(--red); color: #fff; font-weight: 700; border-radius: 50%; }
 
 /* ── Table ── */
-.data-table { width: 100%; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); border-collapse: separate; border-spacing: 0; }
-.data-table thead th { background: var(--gray-50); font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .5px; padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-200); }
-.data-table tbody td { padding: 12px 14px; font-size: 13px; color: var(--gray-700); border-bottom: 1px solid var(--gray-100); }
+.data-table { width: 100%; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; border-collapse: separate; border-spacing: 0; }
+.data-table thead th { background: var(--gray-50); font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gray-200); }
+.data-table tbody td { padding: 10px 12px; font-size: 12px; color: var(--gray-600); border-bottom: 1px solid var(--gray-100); }
 .data-table tbody tr:last-child td { border-bottom: none; }
 .data-table tbody tr:hover { background: var(--gray-50); }
 .data-table tbody tr.needs-review { background: var(--yellow-light); }
-.status-badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; }
+.status-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: .3px; }
 .status-auto { background: var(--green-light); color: #065f46; }
 .status-review { background: var(--yellow-light); color: #92400e; }
-.time-saved { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #065f46; font-size: 14px; font-weight: 700; padding: 12px 20px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid #a7f3d0; }
+.time-saved { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); color: #065f46; font-size: 12px; font-weight: 700; padding: 10px 16px; border-radius: var(--radius); margin-bottom: 16px; border: 1px solid #a7f3d0; }
 
-/* ── Depo Binder Sidebar ── */
-.depo-layout { display: flex; gap: 24px; }
+/* ── Depo Layout ── */
+.depo-layout { display: flex; gap: 20px; }
 .depo-main { flex: 1; }
-.depo-binder { width: 280px; flex-shrink: 0; }
-.binder-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); position: sticky; top: 0; }
-.binder-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-.binder-count { font-size: 36px; font-weight: 800; color: var(--blue); }
-.binder-label { font-size: 12px; color: var(--gray-500); margin-bottom: 12px; }
-.binder-items { list-style: none; margin-top: 12px; }
-.binder-items li { font-size: 12px; color: var(--gray-600); padding: 6px 0; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; gap: 6px; }
-.binder-items li::before { content: '📄'; font-size: 14px; }
-.depo-target { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px; margin-top: 16px; }
-.depo-target h4 { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 6px; }
-.depo-target p { font-size: 13px; color: var(--gray-700); font-weight: 500; }
-.depo-target .date { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+.depo-binder { width: 260px; flex-shrink: 0; }
+.binder-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 18px; position: sticky; top: 0; }
+.binder-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.binder-count { font-size: 32px; font-weight: 800; color: var(--indigo); }
+.binder-label { font-size: 11px; color: var(--gray-400); margin-bottom: 10px; }
+.binder-items { list-style: none; margin-top: 10px; }
+.binder-items li { font-size: 11px; color: var(--gray-600); padding: 5px 0; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; gap: 5px; }
+.binder-items li::before { content: '📄'; font-size: 12px; }
+.depo-target { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 12px; margin-top: 14px; }
+.depo-target h4 { font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.depo-target p { font-size: 12px; color: var(--gray-700); font-weight: 500; }
+.depo-target .date { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
 
 /* ── Risk Badges ── */
-.risk-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: .3px; }
+.risk-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; }
 .risk-high { background: var(--red-light); color: var(--red); }
 .risk-medium { background: var(--yellow-light); color: #b45309; }
-.risk-low { background: var(--green-light); color: #065f46; }
 
-.btn-added { background: var(--green-light) !important; color: #065f46 !important; border-color: #a7f3d0 !important; pointer-events: none; }
+/* ── Section Label ── */
+.section-label { font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
 
-/* ── Sidebar CTA ── */
-.nav-cta { display: block; font-size: 10px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: .6px; margin-top: 4px; animation: ctaPulse 2s ease-in-out infinite; }
-@keyframes ctaPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
-.nav-item.visited .nav-cta { display: none; }
+/* ── Misc ── */
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
 
-/* ── Panel Hero ── */
-.panel-hero { background: linear-gradient(135deg, #1e293b, #334155); border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 24px; color: #fff; animation: heroAttention .6s ease-out; border: 2px solid transparent; transition: border-color .3s ease; }
-.panel-hero.attention { animation: heroAttention .6s ease-out; }
-@keyframes heroAttention {
-  0% { transform: scale(.97); opacity: 0; }
-  40% { transform: scale(1.008); opacity: 1; }
-  60% { transform: scale(.998); }
-  80% { transform: scale(1.003); }
-  100% { transform: scale(1); }
-}
-.panel-hero .hero-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #93c5fd; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-.panel-hero .hero-eyebrow::before { content: ''; display: inline-block; width: 8px; height: 8px; background: #93c5fd; border-radius: 50%; animation: eyebrowPulse 2s ease-in-out infinite; }
-@keyframes eyebrowPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(147,197,253,.5); } 50% { opacity: .7; box-shadow: 0 0 0 6px rgba(147,197,253,0); } }
-.panel-hero h2 { font-size: 22px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
-.panel-hero p { font-size: 14px; color: #cbd5e1; line-height: 1.6; }
+/* ── Chat FAB + Dialog ── */
+.chat-fab { position: fixed; bottom: 20px; right: 24px; z-index: 90; width: 48px; height: 48px; border-radius: 50%; background: var(--indigo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: var(--shadow-lg), 0 0 0 0 rgba(99,102,241,.4); cursor: pointer; transition: all var(--transition); animation: fabPing 3s ease-in-out infinite; border: none; }
+.chat-fab:hover { background: var(--indigo-dark); transform: scale(1.08); }
+.chat-fab.open { animation: none; }
+@keyframes fabPing { 0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(99,102,241,.3); } 50% { box-shadow: var(--shadow-lg), 0 0 0 10px rgba(99,102,241,0); } }
+
+.chat-dialog { position: fixed; bottom: 80px; right: 24px; z-index: 91; width: 380px; max-height: 480px; background: #fff; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; animation: chatSlideUp .2s ease; border: 1px solid var(--gray-200); }
+.chat-dialog.open { display: flex; }
+@keyframes chatSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.chat-header { background: var(--navy); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
+.chat-header-left { display: flex; align-items: center; gap: 8px; }
+.chat-header-left .chat-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.chat-header-left div strong { display: block; font-size: 13px; font-weight: 600; }
+.chat-header-left div span { font-size: 10px; color: rgba(255,255,255,.5); }
+.chat-close { color: rgba(255,255,255,.4); font-size: 18px; cursor: pointer; background: none; border: none; transition: color var(--transition); padding: 0; }
+.chat-close:hover { color: #fff; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 260px; background: var(--gray-50); }
+.chat-msg { max-width: 85%; padding: 9px 12px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
+.chat-msg.ai { background: #fff; border: 1px solid var(--gray-200); color: var(--gray-600); align-self: flex-start; border-bottom-left-radius: 3px; }
+.chat-msg.user { background: var(--indigo); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.chat-msg .msg-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; opacity: .5; }
+.chat-input-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-top: 1px solid var(--gray-200); background: #fff; }
+.chat-input-bar input { flex: 1; border: 1px solid var(--gray-200); border-radius: 20px; padding: 8px 14px; font-size: 12px; background: var(--gray-50); }
+.chat-input-bar input:focus { outline: none; border-color: var(--indigo); }
+.chat-send { width: 32px; height: 32px; border-radius: 50%; background: var(--indigo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; border: none; cursor: pointer; transition: background var(--transition); flex-shrink: 0; }
+.chat-send:hover { background: var(--indigo-dark); }
 
 /* ── Welcome Gate ── */
-.welcome-gate { position: fixed; inset: 0; z-index: 300; background: linear-gradient(135deg, #0f1225 0%, #1a1f36 50%, #1e293b 100%); display: flex; align-items: center; justify-content: center; transition: opacity .4s ease, visibility .4s ease; }
+.welcome-gate { position: fixed; inset: 0; z-index: 300; background: linear-gradient(135deg, #0f0a2e 0%, #1e1b4b 50%, #312e81 100%); display: flex; align-items: center; justify-content: center; transition: opacity .4s ease, visibility .4s ease; }
 .welcome-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.welcome-inner { max-width: 620px; text-align: center; padding: 40px; animation: fadeIn .6s ease; }
-.welcome-inner .welcome-logo { font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #93c5fd; margin-bottom: 24px; }
-.welcome-inner h1 { font-size: 32px; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 14px; }
-.welcome-inner .welcome-sub { font-size: 16px; color: #94a3b8; line-height: 1.7; margin-bottom: 32px; }
-.welcome-modules { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 36px; }
-.welcome-modules .wm-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; padding: 8px 16px; font-size: 13px; color: #cbd5e1; font-weight: 500; }
-.welcome-enter { display: inline-flex; align-items: center; gap: 8px; background: #3b82f6; color: #fff; font-size: 16px; font-weight: 700; padding: 14px 36px; border-radius: 12px; border: none; cursor: pointer; transition: all .2s ease; box-shadow: 0 0 0 0 rgba(59,130,246,.4); animation: enterPulse 2.5s ease-in-out infinite; }
-.welcome-enter:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(59,130,246,.3); }
-@keyframes enterPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,.35); } 50% { box-shadow: 0 0 0 12px rgba(59,130,246,0); } }
-.welcome-hint { font-size: 12px; color: #64748b; margin-top: 16px; }
+.welcome-inner { max-width: 580px; text-align: center; padding: 40px; animation: fadeIn .6s ease; }
+.welcome-inner .welcome-logo { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a5b4fc; margin-bottom: 28px; }
+.welcome-inner h1 { font-size: 30px; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 14px; }
+.welcome-inner .welcome-sub { font-size: 15px; color: #94a3b8; line-height: 1.7; margin-bottom: 28px; }
+.welcome-modules { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 32px; }
+.welcome-modules .wm-pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #c7d2fe; font-weight: 500; }
+.welcome-enter { display: inline-flex; align-items: center; gap: 8px; background: var(--indigo); color: #fff; font-size: 15px; font-weight: 700; padding: 12px 32px; border-radius: 10px; border: none; cursor: pointer; transition: all .2s ease; box-shadow: 0 0 0 0 rgba(99,102,241,.4); animation: enterPulse 2.5s ease-in-out infinite; }
+.welcome-enter:hover { background: var(--indigo-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.3); }
+@keyframes enterPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,.3); } 50% { box-shadow: 0 0 0 12px rgba(99,102,241,0); } }
+.welcome-hint { font-size: 11px; color: #64748b; margin-top: 14px; }
 
 /* ── Guided Tour ── */
 .tour-overlay { position: fixed; inset: 0; z-index: 200; display: none; }
 .tour-overlay.active { display: block; }
 .tour-backdrop { position: fixed; inset: 0; background: rgba(15,18,35,.55); z-index: 201; }
-.tour-highlight { position: absolute; z-index: 202; border: 3px solid var(--blue); border-radius: var(--radius); box-shadow: 0 0 0 9999px rgba(15,18,35,.55); background: transparent; pointer-events: none; transition: all .35s ease; }
-.tour-tooltip { position: absolute; z-index: 203; background: #fff; border-radius: var(--radius-lg); padding: 20px 24px; box-shadow: var(--shadow-xl); max-width: 380px; width: max-content; }
-.tour-tooltip .step-label { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-.tour-tooltip .step-text { font-size: 14px; color: var(--gray-700); line-height: 1.6; margin-bottom: 16px; }
-.tour-tooltip .tour-nav { display: flex; gap: 8px; justify-content: flex-end; }
-.tour-end-card { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 203; background: #fff; border-radius: var(--radius-xl); padding: 40px 48px; text-align: center; box-shadow: var(--shadow-xl); max-width: 480px; display: none; }
+.tour-highlight { position: absolute; z-index: 202; border: 3px solid var(--indigo); border-radius: var(--radius); box-shadow: 0 0 0 9999px rgba(15,18,35,.55); background: transparent; pointer-events: none; transition: all .35s ease; }
+.tour-tooltip { position: absolute; z-index: 203; background: #fff; border-radius: var(--radius-lg); padding: 18px 20px; box-shadow: var(--shadow-xl); max-width: 360px; width: max-content; }
+.tour-tooltip .step-label { font-size: 10px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.tour-tooltip .step-text { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: 14px; }
+.tour-tooltip .tour-nav { display: flex; gap: 6px; justify-content: flex-end; }
+.tour-end-card { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 203; background: #fff; border-radius: var(--radius-xl); padding: 36px 44px; text-align: center; box-shadow: var(--shadow-xl); max-width: 440px; display: none; }
 .tour-end-card.active { display: block; }
-.tour-end-card h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-.tour-end-card p { font-size: 14px; color: var(--gray-500); margin-bottom: 20px; line-height: 1.6; }
-.tour-end-card .tour-end-btns { display: flex; gap: 10px; justify-content: center; }
+.tour-end-card h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.tour-end-card p { font-size: 13px; color: var(--gray-500); margin-bottom: 18px; line-height: 1.6; }
+.tour-end-card .tour-end-btns { display: flex; gap: 8px; justify-content: center; }
 
-/* ── Misc ── */
-.section-label { font-size: 12px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.mb-16 { margin-bottom: 16px; }
-.mb-20 { margin-bottom: 20px; }
-.mt-12 { margin-top: 12px; }
-.text-sm { font-size: 13px; }
-.text-muted { color: var(--gray-500); }
+/* ── Context Banner ── */
+.context-banner { background: var(--indigo-light); border: 1px solid #a5b4fc; border-radius: var(--radius); padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.context-banner p { font-size: 12px; color: var(--indigo-dark); }
+.context-banner .dismiss { background: none; border: none; color: var(--indigo-dark); font-size: 16px; cursor: pointer; padding: 0 4px; opacity: .6; transition: opacity var(--transition); }
+.context-banner .dismiss:hover { opacity: 1; }
+.context-banner.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -320,38 +365,66 @@ input, textarea { font-family: inherit; }
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <h1>Peckar &amp; Abramson</h1>
-      <p>AI Legal Workspace</p>
+      <h1>Peckar &amp; Abramson <span class="version">V1.0</span></h1>
     </div>
+    <div class="sidebar-status"><span class="dot"></span> System Online</div>
+
     <nav class="sidebar-nav">
       <div class="nav-item active" data-panel="timeline" onclick="switchPanel('timeline')">
         <span class="nav-icon">📋</span>
-        <div class="nav-label"><strong>Fact-to-Timeline</strong><em>Build delay chronology</em><span class="nav-cta">▶ Demo this below</span></div>
+        <div><span class="nav-label">Causal Chain</span><span class="nav-cta">▶ Demo this</span></div>
       </div>
       <div class="nav-item" data-panel="briefbank" onclick="switchPanel('briefbank')">
         <span class="nav-icon">🧠</span>
-        <div class="nav-label"><strong>Brief Bank</strong><em>Search firm precedent</em><span class="nav-cta">▶ Demo this below</span></div>
+        <div><span class="nav-label">Firm Brain</span><span class="nav-cta">▶ Demo this</span></div>
       </div>
       <div class="nav-item" data-panel="notice" onclick="switchPanel('notice')">
         <span class="nav-icon">⚠️</span>
-        <div class="nav-label"><strong>Notice Drafting</strong><em>Auto-generate filings</em><span class="nav-cta">▶ Demo this below</span></div>
+        <div><span class="nav-label">Notice Drafting</span><span class="nav-cta">▶ Demo this</span></div>
       </div>
       <div class="nav-item" data-panel="privilege" onclick="switchPanel('privilege')">
         <span class="nav-icon">🔒</span>
-        <div class="nav-label"><strong>Privilege Log</strong><em>AI-assisted discovery</em><span class="nav-cta">▶ Demo this below</span></div>
+        <div><span class="nav-label">Privilege Log</span><span class="nav-cta">▶ Demo this</span></div>
       </div>
       <div class="nav-item" data-panel="depo" onclick="switchPanel('depo')">
         <span class="nav-icon">🎯</span>
-        <div class="nav-label"><strong>Depo Prep</strong><em>Find hot documents</em><span class="nav-cta">▶ Demo this below</span></div>
-      </div>
-      <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08);">
-        <div class="nav-item" onclick="startTour()" style="background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.3);">
-          <span class="nav-icon">🗺️</span>
-          <div class="nav-label"><strong style="color:#93c5fd;">Guided Tour</strong><em style="color:rgba(147,197,253,.7);">Walk through all 5 modules</em></div>
-        </div>
+        <div><span class="nav-label">Hot Doc Finder</span><span class="nav-cta">▶ Demo this</span></div>
       </div>
     </nav>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section-label">Case Library</div>
+    <div class="case-list">
+      <div class="case-item active-case">
+        <div class="case-name">Meridian Tower v. Apex Mechanical</div>
+        <div class="case-meta">342 docs · 2024</div>
+      </div>
+      <div class="case-item">
+        <div class="case-name">Harbor Bridge Reconstruction Dispute</div>
+        <div class="case-meta">1,208 docs · 2019</div>
+      </div>
+      <div class="case-item">
+        <div class="case-name">Lakewood Commons Defect Claim</div>
+        <div class="case-meta">891 docs · 2016</div>
+      </div>
+      <div class="case-item">
+        <div class="case-name">Oceanview Resort — Curtain Wall Failure</div>
+        <div class="case-meta">2,450 docs · 2011</div>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div style="padding: 8px 10px;">
+      <div class="nav-item" onclick="startTour()" style="background:rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.25);">
+        <span class="nav-icon">🗺️</span>
+        <div><span class="nav-label" style="color:#a5b4fc; font-weight:600;">Guided Tour</span></div>
+      </div>
+    </div>
+
     <div class="sidebar-footer">
+      <div class="sidebar-doc-count"><span class="count-icon">📊</span> 47,291 documents indexed</div>
       <div class="sidebar-user">
         <div class="sidebar-avatar">AR</div>
         <div class="sidebar-user-info">
@@ -367,426 +440,435 @@ input, textarea { font-family: inherit; }
     <!-- Top Bar -->
     <header class="topbar">
       <div class="topbar-left">
-        <span class="firm-name">Peckar &amp; Abramson</span>
-        <span class="topbar-divider"></span>
         <span class="topbar-matter"><strong>Active Matter:</strong> Project Falcon — Meridian Commercial Tower Delay Dispute</span>
       </div>
       <div class="topbar-right">
         <span class="topbar-date" id="todayDate"></span>
-        <span class="deadline-pill"><span class="dot"></span>3 Deadlines This Week</span>
+        <span class="topbar-badge badge-secure">🔒 Case Secure</span>
+        <span class="topbar-badge badge-deadline"><span class="dot"></span> 3 Deadlines</span>
       </div>
     </header>
 
     <!-- Content Panels -->
     <div class="content">
 
-      <!-- ═══════════ PANEL 1: TIMELINE ═══════════ -->
+      <!-- ═══════════ PANEL 1: CAUSAL CHAIN ═══════════ -->
       <div class="panel active" id="panel-timeline">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-icon">📋</div>
+            <div class="panel-header-text">
+              <h2>Causal Chain Extraction</h2>
+              <div class="panel-ref">Ref #8842: Automated Delay &amp; Notice Audit for Meridian Tower</div>
+            </div>
+          </div>
+          <div class="panel-header-right">
+            <span class="topbar-badge badge-secure">🔒 Case Secure</span>
+            <button class="btn btn-outline btn-sm">Export to Word</button>
+          </div>
+        </div>
+
         <div class="panel-hero">
           <div class="hero-eyebrow">The Problem This Solves</div>
-          <h2>Associates spend 200+ hours manually reading field reports to build a delay chronology. This does it in 4 minutes.</h2>
-          <p>Your team just received 4,847 Daily Field Reports and 1,203 RFIs from the Meridian project. Normally, a junior associate would spend weeks reading every page, flagging delay events, and assembling a timeline. The AI did it in 4 minutes and 12 seconds — and caught documents the associate would have missed.</p>
-        </div>
-        <div class="panel-header">
-          <h2 class="panel-title">Fact-to-Timeline Engine</h2>
-        </div>
-        <div class="context-banner" id="banner-timeline">
-          <p>This is what it looks like when AI processes your entire project folder — no associate hours required.</p>
-          <button class="dismiss" onclick="dismissBanner('timeline')">&times;</button>
+          <h3>Associates spend 200+ hours manually reading field reports to build a delay chronology. This does it in 4 minutes.</h3>
+          <p>Your team just received 4,847 Daily Field Reports and 1,203 RFIs from the Meridian project. Normally, a junior associate would spend weeks reading every page. The AI did it in 4 minutes and 12 seconds — and caught documents the associate would have missed.</p>
         </div>
 
-        <div class="stats-bar" id="tour-target-timeline">
-          <div class="stat-card highlight">
-            <div class="stat-value">4,847</div>
-            <div class="stat-label">Daily Field Reports</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">1,203</div>
-            <div class="stat-label">RFIs Processed</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">4:12</div>
-            <div class="stat-label">Analysis Time (min)</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">47</div>
-            <div class="stat-label">Delay Events Found</div>
-          </div>
+        <div class="filter-bar">
+          <span class="filter-pill active" onclick="setFilter(this)">All Facts</span>
+          <span class="filter-pill" onclick="setFilter(this)">Delays</span>
+          <span class="filter-pill" onclick="setFilter(this)">RFIs</span>
+          <span class="filter-pill" onclick="setFilter(this)">Weather</span>
+          <span class="filter-pill" onclick="setFilter(this)">Hot Docs</span>
         </div>
 
-        <div class="section-label">Delay Chronology — Key Events</div>
-        <div class="timeline">
-          <div class="timeline-event">
-            <div class="timeline-dot red"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Jan 14, 2024</span>
-                  <div class="timeline-title">Owner fails to respond to RFI-0087 — 18 days late</div>
+        <div class="panel-body">
+          <div class="panel-body-main">
+            <div class="tl-cards">
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi087">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Jan 14, 2024</div>
+                    <div class="tl-title">Owner fails to respond to RFI-0087 — 18 days late</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-critical">Critical</span>
+                    <div class="tl-day-badge critical"><div class="day-num">+18</div><div class="day-label">Days</div></div>
+                  </div>
                 </div>
-                <span class="timeline-badge badge-red">🔴 Critical Delay</span>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: RFI_087.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>RFI-0087 requested structural clarification for the Level 12 curtain wall anchor system. Owner's engineer acknowledged receipt on Dec 27, 2023 but did not issue a formal response until Jan 14, 2024 — 18 days past the contractual 7-day response window. GC's daily field report (DFR #2,341) notes crew standby for 6 working days.</p>
+                  <div class="tl-source">📄 Source: RFI-0087, DFR #2,341, DFR #2,347</div>
+                </div>
               </div>
-              <div class="timeline-detail">
-                <p>RFI-0087 requested structural clarification for the Level 12 curtain wall anchor system. Owner's engineer acknowledged receipt on Dec 27, 2023 but did not issue a formal response until Jan 14, 2024 — 18 days past the contractual 7-day response window. GC's daily field report (DFR #2,341) notes crew standby for 6 working days.</p>
-                <div class="timeline-source">📄 Source: RFI-0087, DFR #2,341, DFR #2,347</div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="pile">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Feb 3, 2024</div>
+                    <div class="tl-title">Concrete pour delayed — Owner-directed redesign of foundation piles</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-critical">Critical</span>
+                    <div class="tl-day-badge critical"><div class="day-num">+22</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: ASI_014.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>Owner issued ASI-014 directing a complete redesign of the deep foundation pile layout for Tower B. This superseded approved shop drawings and required new geotech borings. DFR #2,498 through #2,531 show zero structural activity for 22 consecutive workdays.</p>
+                  <div class="tl-source">📄 Source: ASI-014, DFR #2,498–#2,531, Atlas Piling delay notice</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="email-webb">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Feb 22, 2024</div>
+                    <div class="tl-title">Internal email — PM warns of cascading schedule impact</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-hotdoc">Hot Doc</span>
+                    <div class="tl-day-badge warning"><div class="day-num">+34</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: WEBB_EMAIL_022224.MSG</span>
+                </div>
+                <div class="tl-detail">
+                  <div class="tl-quote">"Helen — we are now 34 days behind on the critical path. If we don't get the pile redesign resolved this week, we are looking at a 60+ day overall delay and significant cost exposure. The GC has noticed."</div>
+                  <p>Marcus Webb (Meridian PM) to Helen Torres (VP Development). This email was not produced in initial discovery.</p>
+                  <div class="tl-source">📄 Source: Email — Webb to Torres, Feb 22, 2024, 4:17 PM</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="rfi112">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Mar 8, 2024</div>
+                    <div class="tl-title">RFI-0112 response received — 14 days late</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-rfi">RFI Delay</span>
+                    <div class="tl-day-badge"><div class="day-num">+14</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: RFI_112.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>Owner's response to RFI-0112 (MEP coordination for levels 8–14) was received 14 days past the contractual deadline. DFR #2,589 notes electrical subcontractor idle crew charges of $12,400/day.</p>
+                  <div class="tl-source">📄 Source: RFI-0112, DFR #2,589, Sub invoice #INV-4402</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="idle">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Mar 19, 2024</div>
+                    <div class="tl-title">Idle crew notice filed by GC — 8 trades affected</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-hotdoc">Hot Doc</span>
+                    <div class="tl-day-badge warning"><div class="day-num">+30</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: GC_NOTICE_031924.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>GC filed a formal idle crew notice under Section 8.3 of the prime contract, citing 8 trades idled. The notice references $487,000 in documented standby costs for the prior 30-day period.</p>
+                  <div class="tl-source">📄 Source: GC Notice dated Mar 19, 2024, Owner response Mar 26, 2024</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="accel">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Apr 5, 2024</div>
+                    <div class="tl-title">Owner issues directive to accelerate — no time extension granted</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-critical">Critical</span>
+                    <div class="tl-day-badge critical"><div class="day-num">+0</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: OWNER_DIRECTIVE_040524.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>Owner issued a written directive to "use best efforts to recover lost time" but refused to grant a formal time extension. GC's attorney flagged this as potential constructive acceleration.</p>
+                  <div class="tl-source">📄 Source: Owner directive dated Apr 5, 2024, DFR #2,701</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="summit">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">May 15, 2024</div>
+                    <div class="tl-title">Subcontractor complaint — "lack of coordination" (unfiled notice)</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-hotdoc">Hot Doc</span>
+                    <div class="tl-day-badge warning"><div class="day-num">+41</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: SUMMIT_INTERNAL_051524.MSG</span>
+                </div>
+                <div class="tl-detail">
+                  <div class="tl-quote">"The Owner's team is completely uncoordinated. We've been told three different things about the chiller plant location this month. We should file a formal notice but [GC] asked us to hold off."</div>
+                  <p>Internal email from Summit Mechanical's PM — complaint about Owner coordination but no formal notice was filed.</p>
+                  <div class="tl-source">📄 Source: Email — J. Reeves (Summit Mech.) to D. Palmer, May 15, 2024</div>
+                </div>
+              </div>
+
+              <div class="tl-card" onclick="toggleTl(this)" data-evidence="extension">
+                <div class="tl-card-top">
+                  <div class="tl-card-left">
+                    <div class="tl-date">Jun 2, 2024</div>
+                    <div class="tl-title">GC submits comprehensive time extension request — 87 days</div>
+                  </div>
+                  <div class="tl-card-right">
+                    <span class="tl-type-badge tl-type-notice">Formal Notice</span>
+                    <div class="tl-day-badge"><div class="day-num">+87</div><div class="day-label">Days</div></div>
+                  </div>
+                </div>
+                <div class="tl-meta">
+                  <span class="tl-grounding"><span class="g-dot"></span> Verified Grounding</span>
+                  <span class="tl-exhibit">Exhibit: GC_TIME_EXT_060224.PDF</span>
+                </div>
+                <div class="tl-detail">
+                  <p>GC submitted a detailed time extension request under Section 8.1, seeking 87 calendar days for cumulative Owner-caused delays. The submission included a forensic schedule analysis, 142 DFR references, and $2.3M in documented delay damages.</p>
+                  <div class="tl-source">📄 Source: GC Time Extension Request, Jun 2, 2024 (147 pages)</div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="timeline-event">
-            <div class="timeline-dot red"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Feb 3, 2024</span>
-                  <div class="timeline-title">Concrete pour delayed — Owner-directed redesign of foundation piles</div>
+
+          <!-- Evidence Trace Panel -->
+          <div class="panel-body-side">
+            <div class="evidence-panel" id="evidencePanel">
+              <div class="evidence-header">
+                <h4>🔍 Evidence Trace</h4>
+                <span style="font-size:10px;color:var(--gray-400);">···</span>
+              </div>
+              <div class="evidence-doc" id="evidenceContent">
+                <div class="evidence-doc-page">
+                  <div class="doc-header">
+                    <div class="doc-title">Daily Field Report</div>
+                  </div>
+                  <div class="doc-meta">
+                    <div class="doc-meta-row"><span class="doc-meta-label">Project:</span><span class="doc-meta-value">Meridian Tower — Phase II</span></div>
+                    <div class="doc-meta-row"><span class="doc-meta-label">Type:</span><span class="doc-meta-value">Daily Field Report</span></div>
+                    <div class="doc-meta-row"><span class="doc-meta-label">Author:</span><span class="doc-meta-value">Meridian Construction Group</span></div>
+                  </div>
+                  <p style="margin-top:14px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p style="margin-top:10px;"><span class="evidence-highlight">Heavy rain halted all site preparation in Sector 4.</span></p>
+                  <p style="margin-top:10px;">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
-                <span class="timeline-badge badge-red">🔴 Critical Delay</span>
               </div>
-              <div class="timeline-detail">
-                <p>Owner issued ASI-014 directing a complete redesign of the deep foundation pile layout for Tower B. This superseded approved shop drawings and required new geotech borings. DFR #2,498 through #2,531 show zero structural activity for 22 consecutive workdays. Subcontractor Atlas Piling submitted a formal delay claim on Feb 19, 2024.</p>
-                <div class="timeline-source">📄 Source: ASI-014, DFR #2,498–#2,531, Atlas Piling delay notice</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot yellow"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Feb 22, 2024</span>
-                  <div class="timeline-title">Internal email — PM warns of cascading schedule impact</div>
-                </div>
-                <span class="timeline-badge badge-yellow">🟡 Hot Doc</span>
-              </div>
-              <div class="timeline-detail">
-                <p>Marcus Webb (Meridian PM) emailed Helen Torres (VP Development): <em>"Helen — we are now 34 days behind on the critical path. If we don't get the pile redesign resolved this week, we are looking at a 60+ day overall delay and significant cost exposure. The GC has noticed."</em> This email was not produced in initial discovery.</p>
-                <div class="timeline-source">📄 Source: Email — Webb to Torres, Feb 22, 2024, 4:17 PM</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot blue"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Mar 8, 2024</span>
-                  <div class="timeline-title">RFI-0112 response received — 14 days late</div>
-                </div>
-                <span class="timeline-badge badge-blue">📋 RFI Delay</span>
-              </div>
-              <div class="timeline-detail">
-                <p>Owner's response to RFI-0112 (MEP coordination for levels 8–14) was received 14 days past the contractual deadline. DFR #2,589 notes that the electrical subcontractor could not begin rough-in on level 9 until the response was received, resulting in idle crew charges of $12,400/day.</p>
-                <div class="timeline-source">📄 Source: RFI-0112, DFR #2,589, Sub invoice #INV-4402</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot yellow"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Mar 19, 2024</span>
-                  <div class="timeline-title">Idle crew notice filed by GC — 8 trades affected</div>
-                </div>
-                <span class="timeline-badge badge-yellow">🟡 Hot Doc</span>
-              </div>
-              <div class="timeline-detail">
-                <p>GC filed a formal idle crew notice under Section 8.3 of the prime contract, citing 8 trades idled due to cascading Owner-caused delays. The notice references $487,000 in documented standby costs for the prior 30-day period. Owner acknowledged receipt but disputed causation.</p>
-                <div class="timeline-source">📄 Source: GC Notice dated Mar 19, 2024, Owner response Mar 26, 2024</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot red"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Apr 5, 2024</span>
-                  <div class="timeline-title">Owner issues directive to accelerate — no time extension granted</div>
-                </div>
-                <span class="timeline-badge badge-red">🔴 Critical Delay</span>
-              </div>
-              <div class="timeline-detail">
-                <p>Owner issued a written directive to "use best efforts to recover lost time" but refused to grant a formal time extension or acknowledge Owner-caused delays. GC's construction attorney flagged this as potential constructive acceleration. DFR #2,701 notes GC authorized overtime and weekend work at premium rates beginning Apr 8.</p>
-                <div class="timeline-source">📄 Source: Owner directive dated Apr 5, 2024, DFR #2,701</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot blue"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Apr 28, 2024</span>
-                  <div class="timeline-title">RFI-0134 — Owner rejects initial submittal, requests redesign</div>
-                </div>
-                <span class="timeline-badge badge-blue">📋 RFI Delay</span>
-              </div>
-              <div class="timeline-detail">
-                <p>Owner's architect rejected the approved lobby finish submittal and directed a complete material change from Italian marble to domestic granite. This required new shop drawings, lead time for material procurement (est. 8 weeks), and delayed interior finishes for levels 1–3.</p>
-                <div class="timeline-source">📄 Source: RFI-0134, Architect rejection letter, Revised submittal log</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot yellow"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">May 15, 2024</span>
-                  <div class="timeline-title">Subcontractor notice — "lack of coordination" complaint (unfiled)</div>
-                </div>
-                <span class="timeline-badge badge-yellow">🟡 Hot Doc</span>
-              </div>
-              <div class="timeline-detail">
-                <p>Internal email from Summit Mechanical's PM to their VP: <em>"The Owner's team is completely uncoordinated. We've been told three different things about the chiller plant location this month. We should file a formal notice but [GC] asked us to hold off."</em> This document was never served on the Owner.</p>
-                <div class="timeline-source">📄 Source: Email — J. Reeves (Summit Mech.) to D. Palmer, May 15, 2024</div>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-event">
-            <div class="timeline-dot green"></div>
-            <div class="timeline-card" onclick="toggleTimeline(this)">
-              <div class="timeline-card-header">
-                <div>
-                  <span class="timeline-date">Jun 2, 2024</span>
-                  <div class="timeline-title">GC submits comprehensive time extension request — 87 days</div>
-                </div>
-                <span class="timeline-badge badge-blue">📋 Formal Notice</span>
-              </div>
-              <div class="timeline-detail">
-                <p>GC submitted a detailed time extension request under Section 8.1, seeking 87 calendar days for cumulative Owner-caused delays. The submission included a forensic schedule analysis, 142 DFR references, 23 RFIs with response-time calculations, and $2.3M in documented delay damages. Owner has not yet responded.</p>
-                <div class="timeline-source">📄 Source: GC Time Extension Request, Jun 2, 2024 (147 pages)</div>
+              <div class="evidence-footer">
+                <span>📁 Live Repository</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════ PANEL 2: BRIEF BANK ═══════════ -->
+      <!-- ═══════════ PANEL 2: FIRM BRAIN ═══════════ -->
       <div class="panel" id="panel-briefbank">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-icon">🧠</div>
+            <div class="panel-header-text">
+              <h2>Firm Brain</h2>
+              <div class="panel-ref">Searching 12,400 internal documents across 50 years of precedent</div>
+            </div>
+          </div>
+          <div class="panel-header-right">
+            <span class="topbar-badge badge-secure">🔒 Case Secure</span>
+          </div>
+        </div>
+
         <div class="panel-hero">
           <div class="hero-eyebrow">The Problem This Solves</div>
-          <h2>P&amp;A has 50 years of winning briefs and memos — but nobody can find them when they need them.</h2>
+          <h3>P&amp;A has 50 years of winning briefs and memos — but nobody can find them when they need them.</h3>
           <p>Every time Adam starts a new motion, an associate spends hours asking partners "have we ever briefed this issue?" and digging through folders. The AI searches all 12,400 internal documents in under a second and returns the exact passages that matter — with summaries already written.</p>
         </div>
-        <div class="panel-header">
-          <h2 class="panel-title">Brief Bank — "The Firm Brain"</h2>
-        </div>
 
-        <div class="badge-bar"><span class="icon">🔗</span> Searching across 50 years · 12,400 internal documents · DMS connected</div>
-
-        <div class="section-label" id="tour-target-briefbank">Top Results — 4 matches (0.8 sec)</div>
-        <div class="result-cards">
-          <div class="result-card">
-            <div class="result-card-header">
-              <div class="result-card-title">Memorandum: Defeating "No Damages for Delay" in Florida Public Projects</div>
-              <button class="btn btn-primary btn-sm">Use in Draft</button>
+        <div class="panel-body">
+          <div class="panel-body-main">
+            <div class="badge-bar"><span>🔗</span> Searching across 50 years · 12,400 internal documents · DMS connected</div>
+            <div class="section-label">Top Results — 4 matches (0.8 sec)</div>
+            <div class="result-cards">
+              <div class="result-card">
+                <div class="result-card-header">
+                  <div class="result-card-title">Memorandum: Defeating "No Damages for Delay" in Florida Public Projects</div>
+                  <button class="btn btn-primary btn-sm">Use in Draft</button>
+                </div>
+                <div class="result-card-meta">
+                  <span class="result-tag">Construction Litigation</span>
+                  <span class="result-tag">Florida</span>
+                  <span class="result-year">2021</span>
+                </div>
+                <p class="result-summary">Comprehensive internal memo analyzing Florida's approach to "no damages for delay" clauses. Identifies <mark>five recognized exceptions under Florida law</mark>: (1) active interference, (2) bad faith, (3) delays beyond contract scope, (4) fraud or misrepresentation, and (5) abandonment. Notes that the <mark>Third DCA in Marriott Corp. v. Dasta Constr.</mark> remains the leading authority.</p>
+              </div>
+              <div class="result-card">
+                <div class="result-card-header">
+                  <div class="result-card-title">Brief: Opposition to MSJ — Oceanfront Towers Delay Claim (2019)</div>
+                  <button class="btn btn-primary btn-sm">Use in Draft</button>
+                </div>
+                <div class="result-card-meta">
+                  <span class="result-tag">Motion Practice</span>
+                  <span class="result-tag">Miami-Dade</span>
+                  <span class="result-year">2019</span>
+                </div>
+                <p class="result-summary">Successfully defeated Owner's summary judgment motion relying on a "no damages for delay" clause. Key argument: Owner's <mark>refusal to process 14 RFIs for 30+ days each constituted active interference</mark>. Court denied MSJ in full.</p>
+              </div>
+              <div class="result-card">
+                <div class="result-card-header">
+                  <div class="result-card-title">Partner Alert: New 4th DCA Ruling on Delay Damages — SunBridge Holdings (2023)</div>
+                  <button class="btn btn-primary btn-sm">Use in Draft</button>
+                </div>
+                <div class="result-card-meta">
+                  <span class="result-tag">Case Alert</span>
+                  <span class="result-tag">4th DCA</span>
+                  <span class="result-year">2023</span>
+                </div>
+                <p class="result-summary">Analysis of <mark>SunBridge Holdings v. Apex Builders (4th DCA 2023)</mark>, which expanded the "active interference" exception. Court held that <mark>repeated design changes after contract execution</mark> constitute active interference even if each individual change was within the Owner's contractual right.</p>
+              </div>
+              <div class="result-card">
+                <div class="result-card-header">
+                  <div class="result-card-title">Training Materials: Delay Claims 101 — Florida Construction Litigation Boot Camp</div>
+                  <button class="btn btn-primary btn-sm">Use in Draft</button>
+                </div>
+                <div class="result-card-meta">
+                  <span class="result-tag">Training</span>
+                  <span class="result-tag">Internal CLE</span>
+                  <span class="result-year">2022</span>
+                </div>
+                <p class="result-summary">Internal CLE materials covering the fundamentals of Florida delay claims. Includes <mark>a decision tree for evaluating whether a "no damages for delay" clause is enforceable</mark>, sample discovery requests, and deposition outlines for Owner's project managers.</p>
+              </div>
             </div>
-            <div class="result-card-meta">
-              <span class="result-tag">Construction Litigation</span>
-              <span class="result-tag">Florida</span>
-              <span class="result-year">2021</span>
-            </div>
-            <p class="result-summary">Comprehensive internal memo analyzing Florida's approach to "no damages for delay" clauses. Identifies <mark>five recognized exceptions under Florida law</mark>: (1) active interference, (2) bad faith, (3) delays beyond contract scope, (4) fraud or misrepresentation, and (5) abandonment of the contract. Notes that the <mark>Third DCA in Marriott Corp. v. Dasta Constr.</mark> remains the leading authority. Recommends always pleading active interference as the primary theory.</p>
-          </div>
-          <div class="result-card">
-            <div class="result-card-header">
-              <div class="result-card-title">Brief: Opposition to MSJ — Oceanfront Towers Delay Claim (2019)</div>
-              <button class="btn btn-primary btn-sm">Use in Draft</button>
-            </div>
-            <div class="result-card-meta">
-              <span class="result-tag">Motion Practice</span>
-              <span class="result-tag">Miami-Dade</span>
-              <span class="result-year">2019</span>
-            </div>
-            <p class="result-summary">Successfully defeated Owner's summary judgment motion relying on a "no damages for delay" clause. Key argument: Owner's <mark>refusal to process 14 RFIs for 30+ days each constituted active interference</mark>, falling squarely within the exception. Court denied MSJ in full. Judge Fernandez noted: "The Owner cannot create the delay and then hide behind the clause."</p>
-          </div>
-          <div class="result-card">
-            <div class="result-card-header">
-              <div class="result-card-title">Partner Alert: New 4th DCA Ruling on Delay Damages — SunBridge Holdings (2023)</div>
-              <button class="btn btn-primary btn-sm">Use in Draft</button>
-            </div>
-            <div class="result-card-meta">
-              <span class="result-tag">Case Alert</span>
-              <span class="result-tag">4th DCA</span>
-              <span class="result-year">2023</span>
-            </div>
-            <p class="result-summary">Analysis of <mark>SunBridge Holdings v. Apex Builders (4th DCA 2023)</mark>, which expanded the "active interference" exception. Court held that <mark>repeated design changes after contract execution</mark> constitute active interference even if each individual change was within the Owner's contractual right. Particularly relevant where cumulative impact exceeds 15% of original schedule.</p>
-          </div>
-          <div class="result-card">
-            <div class="result-card-header">
-              <div class="result-card-title">Training Materials: Delay Claims 101 — Florida Construction Litigation Boot Camp</div>
-              <button class="btn btn-primary btn-sm">Use in Draft</button>
-            </div>
-            <div class="result-card-meta">
-              <span class="result-tag">Training</span>
-              <span class="result-tag">Internal CLE</span>
-              <span class="result-year">2022</span>
-            </div>
-            <p class="result-summary">Internal CLE materials covering the fundamentals of Florida delay claims. Includes <mark>a decision tree for evaluating whether a "no damages for delay" clause is enforceable</mark>, sample discovery requests targeting the exceptions, and deposition outline for Owner's project managers. Used in P&amp;A's 2022 associate training program.</p>
           </div>
         </div>
       </div>
 
       <!-- ═══════════ PANEL 3: NOTICE DRAFTING ═══════════ -->
       <div class="panel" id="panel-notice">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-icon">⚠️</div>
+            <div class="panel-header-text">
+              <h2>Notice Drafting</h2>
+              <div class="panel-ref">Automated Filing Generation &amp; Deadline Monitoring</div>
+            </div>
+          </div>
+          <div class="panel-header-right">
+            <span class="topbar-badge badge-secure">🔒 Case Secure</span>
+          </div>
+        </div>
+
         <div class="panel-hero">
           <div class="hero-eyebrow">The Problem This Solves</div>
-          <h2>Miss a Florida lien deadline by one day and your client loses $284,500. The AI never misses a deadline.</h2>
-          <p>Florida's Chapter 713 gives you exactly 90 days to file a Claim of Lien — no extensions, no exceptions. The AI monitors every open invoice, calculates the window automatically, and pre-drafts the filing with all statutory fields populated. Adam just reviews and clicks "E-File."</p>
-        </div>
-        <div class="panel-header">
-          <h2 class="panel-title">Notice Drafting — Automated Filings</h2>
-        </div>
-        <div class="context-banner" id="banner-notice">
-          <p>The AI detected an approaching lien deadline and auto-drafted this Chapter 713 filing. Adam just needs to review and approve.</p>
-          <button class="dismiss" onclick="dismissBanner('notice')">&times;</button>
+          <h3>Miss a Florida lien deadline by one day and your client loses $284,500. The AI never misses a deadline.</h3>
+          <p>Florida's Chapter 713 gives you exactly 90 days to file a Claim of Lien — no extensions, no exceptions. The AI monitors every open invoice, calculates the window automatically, and pre-drafts the filing with all statutory fields populated.</p>
         </div>
 
-        <div class="alert-urgent" id="tour-target-notice">
-          <div class="alert-icon">🔴</div>
-          <div class="alert-text">
-            <div class="alert-title">Urgent: Lien Deadline Approaching</div>
-            <div class="alert-sub">Invoice #4821 — $284,500 unpaid — Day 75 of 90-day lien window · Deadline: <strong>May 19, 2026</strong></div>
-          </div>
-          <button class="btn btn-danger btn-sm">View Invoice</button>
-        </div>
+        <div class="panel-body">
+          <div class="panel-body-main">
+            <div class="context-banner" id="banner-notice">
+              <p>The AI detected an approaching lien deadline and auto-drafted this Chapter 713 filing. Adam just needs to review and approve.</p>
+              <button class="dismiss" onclick="dismissBanner('notice')">&times;</button>
+            </div>
 
-        <div class="tabs">
-          <div class="tab active" data-tab="lien" onclick="switchTab(this, 'lien')">Claim of Lien</div>
-          <div class="tab" data-tab="558" onclick="switchTab(this, '558')">Chapter 558 Notice</div>
-          <div class="tab" data-tab="bond" onclick="switchTab(this, 'bond')">Bond Claim Notice</div>
-        </div>
+            <div class="alert-urgent" id="tour-target-notice">
+              <div class="alert-icon">🔴</div>
+              <div class="alert-text">
+                <div class="alert-title">Urgent: Lien Deadline Approaching</div>
+                <div class="alert-sub">Invoice #4821 — $284,500 unpaid — Day 75 of 90-day lien window · Deadline: <strong>May 19, 2026</strong></div>
+              </div>
+              <button class="btn btn-danger btn-sm">View Invoice</button>
+            </div>
 
-        <div class="tab-content active" id="tab-lien">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Lienor Name</label>
-              <input type="text" value="Falcon General Contractors, LLC">
+            <div class="tabs">
+              <div class="tab active" data-tab="lien" onclick="switchTab(this, 'lien')">Claim of Lien</div>
+              <div class="tab" data-tab="558" onclick="switchTab(this, '558')">Chapter 558 Notice</div>
+              <div class="tab" data-tab="bond" onclick="switchTab(this, 'bond')">Bond Claim Notice</div>
             </div>
-            <div class="form-group">
-              <label>Lienor Address</label>
-              <input type="text" value="2400 Biscayne Blvd, Suite 1200, Miami, FL 33137">
-            </div>
-            <div class="form-group">
-              <label>Property Owner</label>
-              <input type="text" value="Meridian Development Group, Inc.">
-            </div>
-            <div class="form-group">
-              <label>Owner Address</label>
-              <input type="text" value="1001 Brickell Bay Dr, Penthouse, Miami, FL 33131">
-            </div>
-            <div class="form-group full">
-              <label>Legal Description of Property</label>
-              <textarea>Lot 14, Block 7, BRICKELL COMMERCIAL PARK, according to the Plat thereof, recorded in Plat Book 142, Page 87, of the Public Records of Miami-Dade County, Florida. Folio No. 01-3214-087-0140.</textarea>
-            </div>
-            <div class="form-group">
-              <label>Amount Claimed</label>
-              <input type="text" value="$284,500.00">
-            </div>
-            <div class="form-group">
-              <label>Date of Last Work</label>
-              <input type="text" value="February 18, 2026">
-            </div>
-            <div class="form-group full">
-              <label>Description of Services / Materials</label>
-              <textarea>General contracting services including structural concrete, reinforcing steel, formwork, and crane operation for Levels 14 through 22 of the Meridian Commercial Tower, performed pursuant to Prime Contract dated March 1, 2023, as amended by Change Orders 1 through 14.</textarea>
-            </div>
-            <div class="form-group">
-              <label>Sworn Statement Status</label>
-              <select><option>Sworn Statement of Account attached</option></select>
-            </div>
-            <div class="form-group">
-              <label>Filing County</label>
-              <input type="text" value="Miami-Dade County">
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary">Review &amp; Send for E-File</button>
-              <button class="btn btn-outline">Add to Tickler System</button>
-              <button class="btn btn-outline">Download as PDF</button>
-            </div>
-          </div>
 
-          <div class="calendar-mini">
-            <div class="cal-header">
-              <h4>May 2026 — Lien Window</h4>
-              <span style="font-size:12px;color:var(--red);font-weight:600;">Day 75 of 90</span>
+            <div class="tab-content active" id="tab-lien">
+              <div class="form-grid">
+                <div class="form-group"><label>Lienor Name</label><input type="text" value="Falcon General Contractors, LLC"></div>
+                <div class="form-group"><label>Lienor Address</label><input type="text" value="2400 Biscayne Blvd, Suite 1200, Miami, FL 33137"></div>
+                <div class="form-group"><label>Property Owner</label><input type="text" value="Meridian Development Group, Inc."></div>
+                <div class="form-group"><label>Owner Address</label><input type="text" value="1001 Brickell Bay Dr, Penthouse, Miami, FL 33131"></div>
+                <div class="form-group full"><label>Legal Description of Property</label><textarea>Lot 14, Block 7, BRICKELL COMMERCIAL PARK, according to the Plat thereof, recorded in Plat Book 142, Page 87, of the Public Records of Miami-Dade County, Florida. Folio No. 01-3214-087-0140.</textarea></div>
+                <div class="form-group"><label>Amount Claimed</label><input type="text" value="$284,500.00"></div>
+                <div class="form-group"><label>Date of Last Work</label><input type="text" value="February 18, 2026"></div>
+                <div class="form-group full"><label>Description of Services / Materials</label><textarea>General contracting services including structural concrete, reinforcing steel, formwork, and crane operation for Levels 14 through 22 of the Meridian Commercial Tower, performed pursuant to Prime Contract dated March 1, 2023, as amended by Change Orders 1 through 14.</textarea></div>
+                <div class="form-group"><label>Sworn Statement Status</label><select><option>Sworn Statement of Account attached</option></select></div>
+                <div class="form-group"><label>Filing County</label><input type="text" value="Miami-Dade County"></div>
+                <div class="form-actions">
+                  <button class="btn btn-primary">Review &amp; Send for E-File</button>
+                  <button class="btn btn-outline">Add to Tickler System</button>
+                  <button class="btn btn-outline">Download as PDF</button>
+                </div>
+              </div>
+              <div class="calendar-mini">
+                <div class="cal-header"><h4>May 2026 — Lien Window</h4><span style="font-size:11px;color:var(--red);font-weight:700;">Day 75 of 90</span></div>
+                <div class="cal-grid">
+                  <span class="day-label">Su</span><span class="day-label">Mo</span><span class="day-label">Tu</span><span class="day-label">We</span><span class="day-label">Th</span><span class="day-label">Fr</span><span class="day-label">Sa</span>
+                  <span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day">1</span><span class="day">2</span>
+                  <span class="day">3</span><span class="day today">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span>
+                  <span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span>
+                  <span class="day">17</span><span class="day">18</span><span class="day deadline" title="LIEN FILING DEADLINE">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span>
+                  <span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span>
+                  <span class="day">31</span>
+                </div>
+              </div>
             </div>
-            <div class="cal-grid">
-              <span class="day-label">Su</span><span class="day-label">Mo</span><span class="day-label">Tu</span><span class="day-label">We</span><span class="day-label">Th</span><span class="day-label">Fr</span><span class="day-label">Sa</span>
-              <span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day empty"></span><span class="day">1</span><span class="day">2</span>
-              <span class="day">3</span><span class="day today">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span>
-              <span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span>
-              <span class="day">17</span><span class="day">18</span><span class="day deadline" title="LIEN FILING DEADLINE">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span>
-              <span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span>
-              <span class="day">31</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="tab-content" id="tab-558">
-          <div class="form-grid">
-            <div class="form-group full">
-              <label>Notice Type</label>
-              <input type="text" value="Chapter 558 Pre-Suit Notice of Construction Defect Claim" readonly style="background:#fff;">
+            <div class="tab-content" id="tab-558">
+              <div class="form-grid">
+                <div class="form-group full"><label>Notice Type</label><input type="text" value="Chapter 558 Pre-Suit Notice of Construction Defect Claim" readonly style="background:#fff;"></div>
+                <div class="form-group"><label>Claimant</label><input type="text" value="Meridian Development Group, Inc."></div>
+                <div class="form-group"><label>Respondent (Contractor)</label><input type="text" value="Falcon General Contractors, LLC"></div>
+                <div class="form-group full"><label>Description of Alleged Defects</label><textarea>Water intrusion at the Level 18 curtain wall system, believed to be caused by improper sealant application at mullion joints. Defects first observed on November 12, 2025.</textarea></div>
+                <div class="form-group"><label>Statutory Response Period</label><input type="text" value="60 days from receipt (Fla. Stat. § 558.004)" readonly style="background:#fff;"></div>
+                <div class="form-group"><label>Inspection Demand</label><select><option>Yes — requesting inspection within 30 days</option></select></div>
+                <div class="form-actions">
+                  <button class="btn btn-primary">Review &amp; Send for E-File</button>
+                  <button class="btn btn-outline">Add to Tickler System</button>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Claimant</label>
-              <input type="text" value="Meridian Development Group, Inc.">
-            </div>
-            <div class="form-group">
-              <label>Respondent (Contractor)</label>
-              <input type="text" value="Falcon General Contractors, LLC">
-            </div>
-            <div class="form-group full">
-              <label>Description of Alleged Defects</label>
-              <textarea>Water intrusion at the Level 18 curtain wall system, believed to be caused by improper sealant application at mullion joints. Defects first observed on November 12, 2025. Preliminary inspection by Waterproof Consultants, Inc. dated December 3, 2025 (report attached).</textarea>
-            </div>
-            <div class="form-group">
-              <label>Statutory Response Period</label>
-              <input type="text" value="60 days from receipt (Fla. Stat. § 558.004)" readonly style="background:#fff;">
-            </div>
-            <div class="form-group">
-              <label>Inspection Demand</label>
-              <select><option>Yes — requesting inspection within 30 days</option></select>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary">Review &amp; Send for E-File</button>
-              <button class="btn btn-outline">Add to Tickler System</button>
-            </div>
-          </div>
-        </div>
 
-        <div class="tab-content" id="tab-bond">
-          <div class="form-grid">
-            <div class="form-group full">
-              <label>Notice Type</label>
-              <input type="text" value="Payment Bond Claim Notice (Fla. Stat. § 255.05)" readonly style="background:#fff;">
-            </div>
-            <div class="form-group">
-              <label>Bond Principal (GC)</label>
-              <input type="text" value="Falcon General Contractors, LLC">
-            </div>
-            <div class="form-group">
-              <label>Surety</label>
-              <input type="text" value="Continental Surety Corp. — Bond No. CSC-2023-0478">
-            </div>
-            <div class="form-group">
-              <label>Claimant (Subcontractor)</label>
-              <input type="text" value="Summit Mechanical Systems, Inc.">
-            </div>
-            <div class="form-group">
-              <label>Amount of Claim</label>
-              <input type="text" value="$167,200.00">
-            </div>
-            <div class="form-group full">
-              <label>Description of Work &amp; Nonpayment</label>
-              <textarea>HVAC installation and ductwork for Levels 8–14 of the Meridian Commercial Tower, performed between September 2024 and January 2025 pursuant to Subcontract dated August 12, 2024. Three invoices totaling $167,200.00 remain unpaid beyond 45 days: INV-3302 ($62,400), INV-3318 ($58,800), INV-3401 ($46,000).</textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary">Review &amp; Send Notice</button>
-              <button class="btn btn-outline">Add to Tickler System</button>
+            <div class="tab-content" id="tab-bond">
+              <div class="form-grid">
+                <div class="form-group full"><label>Notice Type</label><input type="text" value="Payment Bond Claim Notice (Fla. Stat. § 255.05)" readonly style="background:#fff;"></div>
+                <div class="form-group"><label>Bond Principal (GC)</label><input type="text" value="Falcon General Contractors, LLC"></div>
+                <div class="form-group"><label>Surety</label><input type="text" value="Continental Surety Corp. — Bond No. CSC-2023-0478"></div>
+                <div class="form-group"><label>Claimant (Subcontractor)</label><input type="text" value="Summit Mechanical Systems, Inc."></div>
+                <div class="form-group"><label>Amount of Claim</label><input type="text" value="$167,200.00"></div>
+                <div class="form-group full"><label>Description of Work &amp; Nonpayment</label><textarea>HVAC installation and ductwork for Levels 8–14 of the Meridian Commercial Tower, performed between September 2024 and January 2025 pursuant to Subcontract dated August 12, 2024. Three invoices totaling $167,200.00 remain unpaid beyond 45 days.</textarea></div>
+                <div class="form-actions">
+                  <button class="btn btn-primary">Review &amp; Send Notice</button>
+                  <button class="btn btn-outline">Add to Tickler System</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -794,251 +876,165 @@ input, textarea { font-family: inherit; }
 
       <!-- ═══════════ PANEL 4: PRIVILEGE LOG ═══════════ -->
       <div class="panel" id="panel-privilege">
-        <div class="panel-hero">
-          <div class="hero-eyebrow">The Problem This Solves</div>
-          <h2>A first-year associate just spent 340 hours manually reviewing 10,000 emails for privilege. The AI does it overnight.</h2>
-          <p>Discovery produced 10,412 emails. Every single one needs to be reviewed for attorney-client privilege and work product protection. Normally that's weeks of associate time at $350/hour. The AI auto-categorized 634 privileged documents and only flagged 213 that genuinely need a human judgment call.</p>
-        </div>
-        <div class="panel-header">
-          <h2 class="panel-title">Privilege Log Generator</h2>
-        </div>
-        <div class="context-banner" id="banner-privilege">
-          <p>AI reviewed 10,412 emails and pre-filled 634 entries. Only 213 required attorney review.</p>
-          <button class="dismiss" onclick="dismissBanner('privilege')">&times;</button>
-        </div>
-
-        <div class="stats-bar" id="tour-target-privilege">
-          <div class="stat-card">
-            <div class="stat-value">10,412</div>
-            <div class="stat-label">Emails Reviewed</div>
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-icon">🔒</div>
+            <div class="panel-header-text">
+              <h2>Privilege Log Generator</h2>
+              <div class="panel-ref">AI-Assisted Discovery Review — 10,412 emails processed</div>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">847</div>
-            <div class="stat-label">Flagged Privileged</div>
-          </div>
-          <div class="stat-card highlight">
-            <div class="stat-value">634</div>
-            <div class="stat-label">Auto-Categorized</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">213</div>
-            <div class="stat-label">Need Attorney Review</div>
-          </div>
-        </div>
-
-        <div class="time-saved">⏱️ Estimated time saved: <strong style="margin-left:4px;">340 associate hours</strong></div>
-
-        <div class="flex-between mb-16">
-          <div class="section-label" style="margin:0;">Privilege Log — Sample Entries</div>
-          <div style="display:flex;gap:8px;">
+          <div class="panel-header-right">
+            <span class="topbar-badge badge-secure">🔒 Case Secure</span>
             <button class="btn btn-outline btn-sm">Export to Excel</button>
             <button class="btn btn-primary btn-sm">Submit for Partner Review</button>
           </div>
         </div>
 
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Bates #</th>
-              <th>Date</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Privilege</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>MERID-00234</td>
-              <td>Jan 18, 2024</td>
-              <td>Adam Richter</td>
-              <td>Helen Torres</td>
-              <td>Attorney-Client</td>
-              <td>Legal advice re: RFI response obligations under prime contract</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-            <tr>
-              <td>MERID-00512</td>
-              <td>Feb 5, 2024</td>
-              <td>Sarah Kim (Assoc.)</td>
-              <td>Adam Richter</td>
-              <td>Work Product</td>
-              <td>Draft analysis of constructive acceleration claim under Florida law</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-            <tr class="needs-review">
-              <td>MERID-01087</td>
-              <td>Mar 2, 2024</td>
-              <td>Marcus Webb</td>
-              <td>Adam Richter; James Falcon (CC)</td>
-              <td>Attorney-Client?</td>
-              <td>Email re: project status with legal and business content intermixed</td>
-              <td><span class="status-badge status-review">🟡 Needs Review</span></td>
-            </tr>
-            <tr>
-              <td>MERID-01342</td>
-              <td>Mar 15, 2024</td>
-              <td>Adam Richter</td>
-              <td>James Falcon</td>
-              <td>Attorney-Client</td>
-              <td>Privileged legal strategy memo re: Chapter 558 pre-suit obligations</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-            <tr>
-              <td>MERID-02201</td>
-              <td>Apr 10, 2024</td>
-              <td>Sarah Kim (Assoc.)</td>
-              <td>Adam Richter</td>
-              <td>Work Product</td>
-              <td>Research memo: Florida lien priority issues on commercial projects</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-            <tr class="needs-review">
-              <td>MERID-03455</td>
-              <td>May 1, 2024</td>
-              <td>Helen Torres</td>
-              <td>Marcus Webb; Adam Richter (CC)</td>
-              <td>Attorney-Client?</td>
-              <td>FWD of contractor correspondence with added legal question to counsel</td>
-              <td><span class="status-badge status-review">🟡 Needs Review</span></td>
-            </tr>
-            <tr>
-              <td>MERID-04102</td>
-              <td>May 22, 2024</td>
-              <td>Adam Richter</td>
-              <td>Sarah Kim (Assoc.)</td>
-              <td>Work Product</td>
-              <td>Instructions re: preparation of sworn statement of account analysis</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-            <tr>
-              <td>MERID-05678</td>
-              <td>Jun 8, 2024</td>
-              <td>Expert — Dr. Rivera</td>
-              <td>Adam Richter</td>
-              <td>Work Product</td>
-              <td>Expert draft report on delay damages calculation methodology</td>
-              <td><span class="status-badge status-auto">✓ Auto</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="panel-hero">
+          <div class="hero-eyebrow">The Problem This Solves</div>
+          <h3>A first-year associate just spent 340 hours manually reviewing 10,000 emails for privilege. The AI does it overnight.</h3>
+          <p>Discovery produced 10,412 emails. Every single one needs to be reviewed for attorney-client privilege and work product protection. The AI auto-categorized 634 privileged documents and only flagged 213 that genuinely need a human judgment call.</p>
+        </div>
+
+        <div class="panel-body">
+          <div class="panel-body-main">
+            <div class="stats-row">
+              <div class="stat-chip"><div class="stat-val">10,412</div><div class="stat-lbl">Emails Reviewed</div></div>
+              <div class="stat-chip"><div class="stat-val">847</div><div class="stat-lbl">Flagged Privileged</div></div>
+              <div class="stat-chip accent"><div class="stat-val">634</div><div class="stat-lbl">Auto-Categorized</div></div>
+              <div class="stat-chip"><div class="stat-val">213</div><div class="stat-lbl">Need Review</div></div>
+            </div>
+
+            <div class="time-saved">⏱️ Estimated time saved: <strong style="margin-left:4px;">340 associate hours</strong></div>
+
+            <div class="section-label">Privilege Log — Sample Entries</div>
+
+            <table class="data-table">
+              <thead><tr><th>Bates #</th><th>Date</th><th>From</th><th>To</th><th>Privilege</th><th>Description</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>MERID-00234</td><td>Jan 18, 2024</td><td>Adam Richter</td><td>Helen Torres</td><td>Attorney-Client</td><td>Legal advice re: RFI response obligations</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+                <tr><td>MERID-00512</td><td>Feb 5, 2024</td><td>Sarah Kim (Assoc.)</td><td>Adam Richter</td><td>Work Product</td><td>Draft analysis of constructive acceleration claim</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+                <tr class="needs-review"><td>MERID-01087</td><td>Mar 2, 2024</td><td>Marcus Webb</td><td>Adam Richter; James Falcon (CC)</td><td>Attorney-Client?</td><td>Email with mixed business and legal content</td><td><span class="status-badge status-review">🟡 Review</span></td></tr>
+                <tr><td>MERID-01342</td><td>Mar 15, 2024</td><td>Adam Richter</td><td>James Falcon</td><td>Attorney-Client</td><td>Strategy memo re: Chapter 558 pre-suit obligations</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+                <tr><td>MERID-02201</td><td>Apr 10, 2024</td><td>Sarah Kim (Assoc.)</td><td>Adam Richter</td><td>Work Product</td><td>Research memo: Florida lien priority issues</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+                <tr class="needs-review"><td>MERID-03455</td><td>May 1, 2024</td><td>Helen Torres</td><td>Marcus Webb; Adam Richter (CC)</td><td>Attorney-Client?</td><td>FWD of contractor correspondence with legal question</td><td><span class="status-badge status-review">🟡 Review</span></td></tr>
+                <tr><td>MERID-04102</td><td>May 22, 2024</td><td>Adam Richter</td><td>Sarah Kim (Assoc.)</td><td>Work Product</td><td>Instructions for sworn statement of account analysis</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+                <tr><td>MERID-05678</td><td>Jun 8, 2024</td><td>Expert — Dr. Rivera</td><td>Adam Richter</td><td>Work Product</td><td>Expert draft report on delay damages methodology</td><td><span class="status-badge status-auto">✓ Auto</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- ═══════════ PANEL 5: DEPO PREP ═══════════ -->
       <div class="panel" id="panel-depo">
-        <div class="panel-hero">
-          <div class="hero-eyebrow">The Problem This Solves</div>
-          <h2>The smoking-gun email is buried in 10,000 documents. The AI finds it in one search.</h2>
-          <p>Before a deposition, Adam needs to find every instance where subcontractors complained about the Owner's coordination failures but never filed formal notices. That pattern is devastating at deposition — but finding it manually across thousands of documents takes days. One AI search returns the five most relevant hits instantly.</p>
-        </div>
-        <div class="panel-header">
-          <h2 class="panel-title">Depo Prep — "Hot Doc" Finder</h2>
-        </div>
-        <div class="context-banner" id="banner-depo">
-          <p>One search surfaces the smoking-gun exhibits. The Depo Binder builds itself as Adam adds docs.</p>
-          <button class="dismiss" onclick="dismissBanner('depo')">&times;</button>
-        </div>
-
-        <div class="depo-layout">
-          <div class="depo-main">
-            <div class="section-label" id="tour-target-depo">Results — 5 matches</div>
-            <div class="result-cards">
-              <div class="result-card">
-                <div class="result-card-header">
-                  <div>
-                    <div class="result-card-title">RE: Coordination Issues — Level 12 MEP Conflict</div>
-                    <div class="result-card-meta">
-                      <span class="result-year">May 15, 2024</span>
-                      <span class="result-tag">Summit Mechanical → Internal</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;align-items:center;">
-                    <span class="risk-badge risk-high">High Risk</span>
-                    <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'RE: Coordination Issues — Level 12')">Add to Depo Binder</button>
-                  </div>
-                </div>
-                <p class="result-summary"><mark>"The Owner's team is completely uncoordinated. We've been told three different things about the chiller plant location this month."</mark> Internal email from Summit Mechanical PM to VP — complaint about Owner coordination but no formal notice was filed. GC allegedly asked sub to "hold off."</p>
-              </div>
-              <div class="result-card">
-                <div class="result-card-header">
-                  <div>
-                    <div class="result-card-title">FWD: Where Do We Stand on the Electrical Reroute?</div>
-                    <div class="result-card-meta">
-                      <span class="result-year">Apr 3, 2024</span>
-                      <span class="result-tag">Beacon Electric → GC PM</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;align-items:center;">
-                    <span class="risk-badge risk-high">High Risk</span>
-                    <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'FWD: Electrical Reroute')">Add to Depo Binder</button>
-                  </div>
-                </div>
-                <p class="result-summary">Beacon Electric PM writes: <mark>"We've now been waiting 3 weeks for a decision on the reroute. My guys are standing around. I don't want to file a formal claim but someone needs to make a decision."</mark> Forwarded to GC PM who responded: "Hang tight, we're working on it."</p>
-              </div>
-              <div class="result-card">
-                <div class="result-card-header">
-                  <div>
-                    <div class="result-card-title">Atlas Piling — Internal Frustration Email Chain</div>
-                    <div class="result-card-meta">
-                      <span class="result-year">Feb 14, 2024</span>
-                      <span class="result-tag">Atlas Piling → Internal</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;align-items:center;">
-                    <span class="risk-badge risk-medium">Medium</span>
-                    <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Atlas Piling — Frustration Chain')">Add to Depo Binder</button>
-                  </div>
-                </div>
-                <p class="result-summary">Internal Atlas Piling chain where field superintendent complains: <mark>"Owner's engineer changed the pile layout AGAIN. That's the third revision in two months."</mark> No formal notice filed. Atlas did eventually file a delay claim on Feb 19 (5 days later) but this chain predates it and shows earlier knowledge.</p>
-              </div>
-              <div class="result-card">
-                <div class="result-card-header">
-                  <div>
-                    <div class="result-card-title">Text Messages — GC Superintendent to Sub Foremen (Group Chat)</div>
-                    <div class="result-card-meta">
-                      <span class="result-year">Mar 22, 2024</span>
-                      <span class="result-tag">GC → Multiple Subs</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;align-items:center;">
-                    <span class="risk-badge risk-medium">Medium</span>
-                    <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Text Messages — Group Chat')">Add to Depo Binder</button>
-                  </div>
-                </div>
-                <p class="result-summary">Group text from GC superintendent: <mark>"Heads up — Owner is doing another walk-through tomorrow and will probably change the lobby finishes again. Third time this quarter. Don't order materials until I give the green light."</mark> Multiple subs responded with frustration but none filed formal notices.</p>
-              </div>
-              <div class="result-card">
-                <div class="result-card-header">
-                  <div>
-                    <div class="result-card-title">Weekly Coordination Meeting Notes — Unapproved Draft</div>
-                    <div class="result-card-meta">
-                      <span class="result-year">Apr 18, 2024</span>
-                      <span class="result-tag">GC Internal</span>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;align-items:center;">
-                    <span class="risk-badge risk-high">High Risk</span>
-                    <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Coordination Meeting Notes — Draft')">Add to Depo Binder</button>
-                  </div>
-                </div>
-                <p class="result-summary">Unapproved draft of weekly meeting notes that was <mark>never issued to the Owner</mark>. Contains candid notes: "Owner's indecision on the curtain wall system has now delayed 4 trades. Multiple subs have expressed they want to file notices but are being asked to hold off pending resolution." This draft differs significantly from the approved minutes.</p>
-              </div>
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-icon">🎯</div>
+            <div class="panel-header-text">
+              <h2>Hot Doc Finder</h2>
+              <div class="panel-ref">Deposition Preparation — Marcus Webb, Meridian Development Group</div>
             </div>
           </div>
+          <div class="panel-header-right">
+            <span class="topbar-badge badge-secure">🔒 Case Secure</span>
+          </div>
+        </div>
 
-          <div class="depo-binder">
-            <div class="binder-card">
-              <h3>📁 Depo Binder</h3>
-              <div class="binder-count" id="binderCount">0</div>
-              <div class="binder-label">documents added</div>
-              <button class="btn btn-primary btn-sm" style="width:100%;">Export Binder as PDF</button>
-              <ul class="binder-items" id="binderItems"></ul>
-              <div class="depo-target">
-                <h4>Deposition Target</h4>
-                <p>Marcus Webb, Project Manager</p>
-                <p>Meridian Development Group</p>
-                <div class="date">Scheduled: October 14, 2024</div>
+        <div class="panel-hero">
+          <div class="hero-eyebrow">The Problem This Solves</div>
+          <h3>The smoking-gun email is buried in 10,000 documents. The AI finds it in one search.</h3>
+          <p>Before a deposition, Adam needs to find every instance where subcontractors complained about the Owner's coordination failures but never filed formal notices. One AI search returns the five most relevant hits instantly.</p>
+        </div>
+
+        <div class="panel-body">
+          <div class="panel-body-main">
+            <div class="depo-layout">
+              <div class="depo-main">
+                <div class="section-label">Results — 5 matches</div>
+                <div class="result-cards">
+                  <div class="result-card">
+                    <div class="result-card-header">
+                      <div>
+                        <div class="result-card-title">RE: Coordination Issues — Level 12 MEP Conflict</div>
+                        <div class="result-card-meta"><span class="result-year">May 15, 2024</span><span class="result-tag">Summit Mechanical → Internal</span></div>
+                      </div>
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <span class="risk-badge risk-high">High Risk</span>
+                        <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'RE: Coordination Issues — Level 12')">Add to Binder</button>
+                      </div>
+                    </div>
+                    <p class="result-summary"><mark>"The Owner's team is completely uncoordinated. We've been told three different things about the chiller plant location this month."</mark> Internal email — complaint about Owner coordination but no formal notice was filed.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="result-card-header">
+                      <div>
+                        <div class="result-card-title">FWD: Where Do We Stand on the Electrical Reroute?</div>
+                        <div class="result-card-meta"><span class="result-year">Apr 3, 2024</span><span class="result-tag">Beacon Electric → GC PM</span></div>
+                      </div>
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <span class="risk-badge risk-high">High Risk</span>
+                        <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'FWD: Electrical Reroute')">Add to Binder</button>
+                      </div>
+                    </div>
+                    <p class="result-summary">Beacon Electric PM: <mark>"We've now been waiting 3 weeks for a decision on the reroute. My guys are standing around. I don't want to file a formal claim but someone needs to make a decision."</mark></p>
+                  </div>
+                  <div class="result-card">
+                    <div class="result-card-header">
+                      <div>
+                        <div class="result-card-title">Atlas Piling — Internal Frustration Email Chain</div>
+                        <div class="result-card-meta"><span class="result-year">Feb 14, 2024</span><span class="result-tag">Atlas Piling → Internal</span></div>
+                      </div>
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <span class="risk-badge risk-medium">Medium</span>
+                        <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Atlas Piling — Frustration Chain')">Add to Binder</button>
+                      </div>
+                    </div>
+                    <p class="result-summary">Field superintendent: <mark>"Owner's engineer changed the pile layout AGAIN. That's the third revision in two months."</mark> No formal notice filed. Atlas did eventually file a delay claim 5 days later.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="result-card-header">
+                      <div>
+                        <div class="result-card-title">Text Messages — GC Superintendent to Sub Foremen (Group Chat)</div>
+                        <div class="result-card-meta"><span class="result-year">Mar 22, 2024</span><span class="result-tag">GC → Multiple Subs</span></div>
+                      </div>
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <span class="risk-badge risk-medium">Medium</span>
+                        <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Text Messages — Group Chat')">Add to Binder</button>
+                      </div>
+                    </div>
+                    <p class="result-summary">GC superintendent: <mark>"Heads up — Owner is doing another walk-through tomorrow and will probably change the lobby finishes again. Don't order materials until I give the green light."</mark></p>
+                  </div>
+                  <div class="result-card">
+                    <div class="result-card-header">
+                      <div>
+                        <div class="result-card-title">Weekly Coordination Meeting Notes — Unapproved Draft</div>
+                        <div class="result-card-meta"><span class="result-year">Apr 18, 2024</span><span class="result-tag">GC Internal</span></div>
+                      </div>
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <span class="risk-badge risk-high">High Risk</span>
+                        <button class="btn btn-outline btn-sm depo-add-btn" onclick="addToBinder(this, 'Coordination Meeting Notes — Draft')">Add to Binder</button>
+                      </div>
+                    </div>
+                    <p class="result-summary">Unapproved draft <mark>never issued to the Owner</mark>. Notes: "Owner's indecision on the curtain wall system has now delayed 4 trades. Multiple subs want to file notices but are being asked to hold off."</p>
+                  </div>
+                </div>
+              </div>
+              <div class="depo-binder">
+                <div class="binder-card">
+                  <h3>📁 Depo Binder</h3>
+                  <div class="binder-count" id="binderCount">0</div>
+                  <div class="binder-label">documents added</div>
+                  <button class="btn btn-primary btn-sm" style="width:100%;">Export Binder as PDF</button>
+                  <ul class="binder-items" id="binderItems"></ul>
+                  <div class="depo-target">
+                    <h4>Deposition Target</h4>
+                    <p>Marcus Webb, Project Manager</p>
+                    <p>Meridian Development Group</p>
+                    <div class="date">Scheduled: October 14, 2024</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1056,11 +1052,11 @@ input, textarea { font-family: inherit; }
     <h1>Your AI Legal Workspace — Live Demo</h1>
     <p class="welcome-sub">This interactive dashboard demonstrates five AI-powered services built around your practice, using realistic dummy data. All services can be customized for your business.</p>
     <div class="welcome-modules">
-      <span class="wm-pill">📋 Fact-to-Timeline</span>
-      <span class="wm-pill">🧠 Brief Bank</span>
+      <span class="wm-pill">📋 Causal Chain</span>
+      <span class="wm-pill">🧠 Firm Brain</span>
       <span class="wm-pill">⚠️ Notice Drafting</span>
       <span class="wm-pill">🔒 Privilege Log</span>
-      <span class="wm-pill">🎯 Depo Prep</span>
+      <span class="wm-pill">🎯 Hot Doc Finder</span>
     </div>
     <button class="welcome-enter" onclick="dismissWelcome()">Explore the Dashboard →</button>
     <div class="welcome-hint">Use the panel on the left to switch between services</div>
@@ -1126,7 +1122,7 @@ function dismissWelcome() {
 }
 
 /* ── Date ── */
-document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 
 /* ── Panel Switching ── */
 function switchPanel(id) {
@@ -1143,8 +1139,14 @@ function switchPanel(id) {
 }
 
 /* ── Timeline Toggle ── */
-function toggleTimeline(el) {
+function toggleTl(el) {
   el.classList.toggle('expanded');
+}
+
+/* ── Filter Pills ── */
+function setFilter(el) {
+  el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
 }
 
 /* ── Tabs ── */
@@ -1180,32 +1182,32 @@ const tourSteps = [
   {
     panel: 'timeline',
     target: '#panel-timeline .panel-hero',
-    label: 'Step 1 of 5 — Fact-to-Timeline Engine',
-    text: 'The AI ingested 4,847 field reports and 1,203 RFIs in 4 minutes flat. Scroll down to see the delay chronology it built — click any event to expand the source documents. Red dots mark critical delays, yellow dots are hot documents.'
+    label: 'Step 1 of 5 — Causal Chain Extraction',
+    text: 'The AI ingested 4,847 field reports and 1,203 RFIs in 4 minutes flat. Scroll down to see the delay chronology — click any event to expand source documents. The Evidence Trace panel on the right shows verified document grounding.'
   },
   {
     panel: 'briefbank',
     target: '#panel-briefbank .panel-hero',
-    label: 'Step 2 of 5 — Brief Bank',
+    label: 'Step 2 of 5 — Firm Brain',
     text: '50 years of P&A briefs, searchable in under a second. Below you\'ll see 4 results the AI pulled for "No Damages for Delay" in Florida — each with an AI-written summary and highlighted key passages. Click "Use in Draft" to pull any into your working document.'
   },
   {
     panel: 'notice',
     target: '#panel-notice .panel-hero',
     label: 'Step 3 of 5 — Notice Drafting',
-    text: 'The AI detected an approaching Chapter 713 lien deadline — Day 75 of 90. It auto-drafted the Claim of Lien with every statutory field pre-filled. Use the tabs below to see Chapter 558 and Bond Claim notices too. Adam just reviews and clicks E-File.'
+    text: 'The AI detected an approaching Chapter 713 lien deadline — Day 75 of 90. It auto-drafted the Claim of Lien with every statutory field pre-filled. Use the tabs to see Chapter 558 and Bond Claim notices too.'
   },
   {
     panel: 'privilege',
     target: '#panel-privilege .panel-hero',
     label: 'Step 4 of 5 — Privilege Log',
-    text: 'AI reviewed 10,412 discovery emails overnight. It auto-categorized 634 privileged documents and flagged only 213 that need a human call — saving an estimated 340 associate hours. The yellow rows below are the ambiguous ones awaiting Adam\'s review.'
+    text: 'AI reviewed 10,412 discovery emails overnight. It auto-categorized 634 privileged documents and flagged only 213 that need a human call — saving an estimated 340 associate hours.'
   },
   {
     panel: 'depo',
     target: '#panel-depo .panel-hero',
-    label: 'Step 5 of 5 — Depo Prep',
-    text: 'The AI found 5 smoking-gun emails where subs complained about the Owner but never filed formal notices. Click "Add to Depo Binder" on any result — the binder on the right builds the exhibit set for Marcus Webb\'s deposition automatically.'
+    label: 'Step 5 of 5 — Hot Doc Finder',
+    text: 'The AI found 5 smoking-gun emails where subs complained about the Owner but never filed formal notices. Click "Add to Binder" on any result — the binder on the right builds the exhibit set automatically.'
   }
 ];
 
