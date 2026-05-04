@@ -729,10 +729,9 @@ input, textarea { font-family: inherit; }
         </div>
 
         <div class="fb-chat-container">
-          <div class="fb-greeting">
-            <div class="fb-greeting-icon">🧠</div>
-            <h3>Firm Brain</h3>
-            <p>Ask me anything about your cases, briefs, memos, or legal precedent. I have access to 50 years of P&amp;A documents.</p>
+          <div class="fb-input-area">
+            <input type="text" id="fbInput" placeholder="Ask the Firm Brain anything..." onkeydown="if(event.key==='Enter')fbSend()">
+            <button class="fb-send-btn" onclick="fbSend()">➤</button>
           </div>
 
           <div class="fb-suggestions">
@@ -743,11 +742,6 @@ input, textarea { font-family: inherit; }
           </div>
 
           <div class="fb-thread" id="fbThread"></div>
-
-          <div class="fb-input-area">
-            <input type="text" id="fbInput" placeholder="Ask the Firm Brain..." onkeydown="if(event.key==='Enter')fbSend()">
-            <button class="fb-send-btn" onclick="fbSend()">➤</button>
-          </div>
 
           <div class="fb-history">
             <div class="fb-history-label">Recent Conversations</div>
